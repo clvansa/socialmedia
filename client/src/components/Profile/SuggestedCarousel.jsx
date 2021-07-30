@@ -27,8 +27,8 @@ const responsive = {
 const SuggestedCarousel = ({ suggestedFriends }) => {
   const [suggested, setSuggested] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  console.log(suggestedFriends);
 
+  
   //Shuffle users
   useEffect(() => {
     setSuggested(Users.sort(() => Math.random() - 0.5));

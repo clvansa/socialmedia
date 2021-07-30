@@ -51,6 +51,5 @@
     ">0.2%",
     "not dead",
     "not op_mini all"
-  ],
-  "proxy": "http://82.165.111.158/api"
+  ]
 }

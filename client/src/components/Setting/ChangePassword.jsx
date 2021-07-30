@@ -5,7 +5,7 @@ import SettingItem from "./SettingItem";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { changePasswordSchema } from "../../util/yupSchema";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 
 const ChangePassword = ({ setShowChangePassword }) => {
   const {
@@ -23,7 +23,7 @@ const ChangePassword = ({ setShowChangePassword }) => {
       newPassword: data.newPassword,
     };
     try {
-      const res = await axios.put("/users/changepassword", password);
+      const res = await axiosInstance.put("/users/changepassword", password);
       setShowChangePassword(false);
     } catch (err) {
       setError("oldPassword", {

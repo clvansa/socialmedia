@@ -47,7 +47,6 @@ const App = () => {
     return myTheme
   }
 
-  console.log(user?._id)
 
   useEffect(() => {
     let mounted = true;

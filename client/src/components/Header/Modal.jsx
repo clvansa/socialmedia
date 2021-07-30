@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import styled from "styled-components";
 import Post from "../Post";
 
@@ -39,7 +39,7 @@ export default function SimpleModal({ postId, handleClose, handleOpen, open }) {
   useEffect(() => {
     const getPost = async () => {
       try {
-        const res = await axios.get(`/posts/${postId}`);
+        const res = await axiosInstance.get(`/posts/${postId}`);
         await setPost(res.data);
       } catch (err) {
         console.log(err);

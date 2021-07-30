@@ -8,7 +8,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import { makeStyles } from "@material-ui/core/styles";
 import { MoreVert } from "@material-ui/icons";
-import axios from "axios";
+import {axiosInstance} from "../util/axiosInstance";
 import EditPostModal from "./EditPostModal";
 import useOutside from "../util/useOutside";
 
@@ -38,7 +38,7 @@ const PostMenuItems = ({ post, userId, update }) => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${post?._id}`);
+      await axiosInstance.delete(`/posts/${post?._id}`);
       update();
       setOpen(false);
     } catch (err) {

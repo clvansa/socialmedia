@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../util/axiosInstance";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -36,8 +36,8 @@ const PostPage = (props) => {
         let mounted = true;
         const getPost = async () => {
             try {
-                const res = await axios.get(`/posts/${postId}`)
-                const resUser = await axios.get(`/users/user?userId=${res.data.userId}`)
+                const res = await axiosInstance.get(`/posts/${postId}`)
+                const resUser = await axiosInstance.get(`/users/user?userId=${res.data.userId}`)
 
                 if (mounted) {
                     setPost(res.data)
@@ -58,7 +58,7 @@ const PostPage = (props) => {
 
     const likeHandler = async () => {
         try {
-            const res = await axios.put(`/posts/${post._id}/like`);
+            const res = await axiosInstance.put(`/posts/${post._id}/like`);
             if (res.data.like) {
                 //Check
                 const data = {
@@ -78,7 +78,7 @@ const PostPage = (props) => {
 
     const handleSavePost = async () => {
         try {
-            await axios.put(`/posts/bookmark/post/${post._id}`);
+            await axiosInstance.put(`/posts/bookmark/post/${post._id}`);
             setBookmark((prevBookMark) => !prevBookMark);
         } catch (err) {
             console.log(err);

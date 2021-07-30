@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import urlToFile from "../../util/urlToFile";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 
 const CropperImage = ({ file, type, setFile }) => {
   const [imageDestination, setImageDestination] = useState("");
@@ -54,7 +54,7 @@ const CropperImage = ({ file, type, setFile }) => {
       data.append("name", fileName);
       data.append("file", converetFile);
 
-      const res = await axios.post("/upload/person", data);
+      const res = await axiosInstance.post("/upload/person", data);
     } catch (err) {
       console.log(err);
     }
@@ -71,7 +71,7 @@ const CropperImage = ({ file, type, setFile }) => {
         };
       }
 
-      const res = await axios.put(`/users/`, data);
+      const res = await axiosInstance.put(`/users/`, data);
     } catch (err) {
       console.log(err);
     }

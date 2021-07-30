@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import Topbar from '../components/Header/Topbar';
 import Feed from '../components/Feed';
-import axios from 'axios';
+import {axiosInstance} from '../util/axiosInstance';
 import { useParams } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 
@@ -30,7 +30,7 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const res = await axios.get(`/users/user?username=${username}`)
+            const res = await axiosInstance.get(`/users/user?username=${username}`)
             setUser(res.data)
         }
         fetchUser()

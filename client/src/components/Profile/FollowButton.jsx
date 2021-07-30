@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { FOLLOW, UNFOLLOW } from "../../context/type";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
@@ -18,10 +18,10 @@ const FollowButton = ({ user }) => {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put(`/users/${user._id}/unfollow`);
+        await axiosInstance.put(`/users/${user._id}/unfollow`);
         dispatch({ type: UNFOLLOW, payload: user._id });
       } else {
-        await axios.put(`/users/${user._id}/follow`);
+        await axiosInstance.put(`/users/${user._id}/follow`);
         dispatch({ type: FOLLOW, payload: user._id });
       }
     } catch (err) {

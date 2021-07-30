@@ -8,7 +8,7 @@ import React, {
 import styled from "styled-components";
 import { AuthContext } from "../../context/AuthContext";
 import Message from "./Message";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import ChatMessagerInput from "./ChatMessagerInput";
 import { Avatar, CircularProgress, IconButton } from "@material-ui/core";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
@@ -77,7 +77,7 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
     const getMessages = async () => {
       if (!currentChat) return;
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `/message/msg/${currentChat._id}?count=${count}&page=${page}`
         );
 
@@ -98,7 +98,7 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
       if (!currentChat) return;
 
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `/message/msg/${currentChat?._id}?count=50&page=1`
         );
 
@@ -130,7 +130,7 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
     };
     sendMessageToSocket(dataToSocket);
     try {
-      const res = await axios.post("/message/", message);
+      const res = await axiosInstance.post("/message/", message);
       setMessages((prevMsg) => [res.data, ...prevMsg]);
       setCount((prvCount) => prvCount + 1);
       setNewMessage("");
@@ -155,7 +155,7 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
       if (!friendId) return;
 
       try {
-        const res = await axios.get(`/users/user?userId=${friendId}`);
+        const res = await axiosInstance.get(`/users/user?userId=${friendId}`);
         setCurrentFriend(res.data);
       } catch (err) {
         console.log(err);
@@ -174,7 +174,7 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
     };
     seenMsg(data);
     try {
-      await axios.put(`/message/${currentChat?._id}`);
+      await axiosInstance.put(`/message/${currentChat?._id}`);
     } catch (err) {
       console.log(err);
     }

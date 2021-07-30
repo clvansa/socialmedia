@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SocketContext } from "../../context/SocketContext";
 import { Button, Avatar } from "@material-ui/core/";
 import { Call, CallEnd } from "@material-ui/icons";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Ring from "../../audioList/Tone-ringback.mp3";
 
 const VideoNotifications = () => {
@@ -19,7 +19,7 @@ const VideoNotifications = () => {
     if (!findUser) return;
     const getUser = async () => {
       try {
-        const res = await axios.get(`/users/user?userId=${findUser.userId}`);
+        const res = await axiosInstance.get(`/users/user?userId=${findUser.userId}`);
         setCaller(res.data);
       } catch (err) {
         console.log(err);

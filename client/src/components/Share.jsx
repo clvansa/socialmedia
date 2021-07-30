@@ -10,7 +10,7 @@ import {
   EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
-import axios from "axios";
+import {axiosInstance} from "../util/axiosInstance";
 import TagMenu from "./TagMenu";
 import TagLists from "./TagLists";
 import FeelingLists from "./FeelingLists";
@@ -33,7 +33,7 @@ const Share = (props) => {
 
   const getLocation = async () => {
     try {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `https://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_API_KEY}&location=${location.coordinates.lat},${location.coordinates.lan}&includeRoadMetadata=true&includeNearestIntersection=true`
       );
       setCurrentCity(res.data.results[0].locations[0].adminArea3);
@@ -66,13 +66,13 @@ const Share = (props) => {
         newPost.img = fileName;
       }
       try {
-        await axios.post("/upload/post", data);
+        await axiosInstance.post("/upload/post", data);
       } catch (err) {
         console.log(err);
       }
     }
     try {
-      await axios.post("/posts", newPost);
+      await axiosInstance.post("/posts", newPost);
     } catch (err) {
       console.log(err);
     }
@@ -102,7 +102,7 @@ const Share = (props) => {
         // setSearch(e.target.value);
         try {
           // if (!e.target.value) return;
-          const res = await axios.get(
+          const res = await axiosInstance.get(
             `/users/search?username=${u.split("@")[1]}`
           );
 

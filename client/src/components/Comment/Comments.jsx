@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
 import { CircularProgress } from "@material-ui/core";
@@ -39,7 +39,7 @@ const Comments = ({ postId, user }) => {
     setIsLoading(true);
     const getComments = async () => {
       try {
-        const res = await axios.get(
+        const res = await axiosInstance.get(
           `/comments/post/${postId}?count=2&page=${page}`
         );
         if (res.data.length === 0) setLoadMore(false);

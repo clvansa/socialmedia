@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { Avatar, Button, Tooltip } from "@material-ui/core";
 import { format } from "timeago.js";
 import MenuListComment from "./MenuListComment";
@@ -29,7 +29,7 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
 
   const deleteComment = async () => {
     try {
-      const deleteOne = await axios.delete(`/comments/comment/${comment._id}`);
+      const deleteOne = await axiosInstance.delete(`/comments/comment/${comment._id}`);
       delComment(comment._id);
     } catch (err) {
       console.log(err);
@@ -42,7 +42,7 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
 
   const handleSave = async () => {
     try {
-      const res = await axios.put(`/comments/comment/${comment._id}`, {
+      const res = await axiosInstance.put(`/comments/comment/${comment._id}`, {
         text,
       });
       setTag("span");
@@ -55,7 +55,7 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
   const handleClick = async (id) => {
     console.log(id);
     try {
-      const res = await axios.put(`/comments/${comment._id}/like`);
+      const res = await axiosInstance.put(`/comments/${comment._id}/like`);
 
       setLike(res.data.like ? like + 1 : like - 1);
     } catch (err) {

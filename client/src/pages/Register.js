@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosInstance} from '../util/axiosInstance';
 import React, { useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -25,7 +25,7 @@ const Register = () => {
             password: data.password
         }
         try {
-            await axios.post('/auth/register', user);
+            await axiosInstance.post('/auth/register', user);
             history.push('/login')
 
         } catch (err) {

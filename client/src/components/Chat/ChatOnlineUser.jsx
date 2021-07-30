@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { SocketContext } from "../../context/SocketContext";
 
 const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
@@ -11,7 +11,7 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
 
   const getFriends = async () => {
     try {
-      const res = await axios.get(`/users/friends/${currentUserId}`);
+      const res = await axiosInstance.get(`/users/friends/${currentUserId}`);
       setFriends(res.data);
     } catch (err) {
       console.log(err);
@@ -42,8 +42,8 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
     };
 
     try {
-      const newConv = await axios.post("/conversation/", newConversation);
-      const res = await axios.get(`/conversation/`);
+      const newConv = await axiosInstance.post("/conversation/", newConversation);
+      const res = await axiosInstance.get(`/conversation/`);
       if (newConv.status === 200) {
         return setCurrentChat(newConv.data);
       } else if (newConv.status === 201) {

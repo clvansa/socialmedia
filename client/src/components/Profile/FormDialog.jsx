@@ -14,7 +14,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DateFnsUtils from "@date-io/date-fns";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { GetUser, GetOwnUser } from "../../context/AuthActions";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -75,7 +75,7 @@ const FormDialog = ({ user }) => {
     };
 
     try {
-      const updateInformation = await axios.put(`/users/`, data);
+      const updateInformation = await axiosInstance.put(`/users/`, data);
       setOpen(false);
       GetOwnUser(dispatch);
     } catch (err) {

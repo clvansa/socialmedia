@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { format } from "timeago.js";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -14,7 +14,7 @@ const UnseenMessage = ({ notification, messageLength }) => {
 
   const handleClick = async (recipient) => {
     try {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `/conversation/find/${user._id}/${recipient.sender}`
       );
 
@@ -32,7 +32,7 @@ const UnseenMessage = ({ notification, messageLength }) => {
     let mounted = true;
     const getUser = async () => {
       try {
-        const res = await axios.get(`/users/user?userId=${lastMessage.sender}`);
+        const res = await axiosInstance.get(`/users/user?userId=${lastMessage.sender}`);
         console.log(lastMessage.sender);
         if (mounted) {
           setSender(res.data);

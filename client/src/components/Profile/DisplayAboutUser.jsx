@@ -9,7 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import PlaylistAddCheckOutlinedIcon from "@material-ui/icons/PlaylistAddCheckOutlined";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { GetOwnUser } from "../../context/AuthActions";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -56,7 +56,7 @@ const DisplayAboutUser = ({ user }) => {
 
   const handleUpdate = async () => {
     try {
-      const res = await axios.put(`/users/userinfo/`, valueChecked);
+      const res = await axiosInstance.put(`/users/userinfo/`, valueChecked);
       await setValueChecked(res.data);
       setOpen(false);
       await GetOwnUser(dispatch);

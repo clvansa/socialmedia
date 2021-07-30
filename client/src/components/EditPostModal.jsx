@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import axios from "axios";
+import { axiosInstance } from "../util/axiosInstance";
 import { AuthContext } from "../context/AuthContext";
 import useGeoLocation from "../util/useGeoLocation";
 import styled from "styled-components";
@@ -51,7 +51,7 @@ const EditPostModal = ({ currentPost, openModal, setOpenModal }, props) => {
 
   const getLocation = async () => {
     try {
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `https://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_API_KEY}&location=${location.coordinates.lat},${location.coordinates.lan}&includeRoadMetadata=true&includeNearestIntersection=true`
       );
       setCurrentCity(res.data.results[0].locations[0].adminArea3);
@@ -88,13 +88,13 @@ const EditPostModal = ({ currentPost, openModal, setOpenModal }, props) => {
       }
 
       try {
-        await axios.post("/upload/post", data);
+        await axiosInstance.post("/upload/post", data);
       } catch (err) {
         console.log(err);
       }
     }
     try {
-      await axios.put(`/posts/${currentPost._id}`, updatePost);
+      await axiosInstance.put(`/posts/${currentPost._id}`, updatePost);
     } catch (err) {
       console.log(err);
     }

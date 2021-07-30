@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Conversations from "./Conversations";
 import { SocketContext } from "../../context/SocketContext";
 
@@ -13,7 +13,7 @@ const ChatMessagerConversation = ({ setCurrentChat, user, currentChat }) => {
     const getCovnersation = async () => {
       if (!user) return;
       try {
-        const res = await axios.get(`/conversation/`);
+        const res = await axiosInstance.get(`/conversation/`);
         setConversations(res.data);
       } catch (err) {
         console.log(err);
@@ -30,7 +30,7 @@ const ChatMessagerConversation = ({ setCurrentChat, user, currentChat }) => {
     setCurrentChat(conversation);
     setActive(conversation._id);
     try {
-      await axios.put(`/message/${conversation?._id}`);
+      await axiosInstance.put(`/message/${conversation?._id}`);
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +38,7 @@ const ChatMessagerConversation = ({ setCurrentChat, user, currentChat }) => {
 
   const deleteConversation = async (conversationId) => {
     try {
-      const res = await axios.delete(`/message/messages/${conversationId}`);
+      const res = await axiosInstance.delete(`/message/messages/${conversationId}`);
       console.log(res.data);
       setConversations(
         conversations.filter(

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Person, Search, Chat, Notifications } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
 import { IconButton, Button } from "@material-ui/core";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Notification from "./Notification";
 import useOutside from "../../util/useOutside";
 import { AuthContext } from "../../context/AuthContext";
@@ -38,7 +38,7 @@ const Topbar = () => {
   useEffect(() => {
     const getNotifications = async () => {
       try {
-        const res = await axios.get(`/users/notification/`);
+        const res = await axiosInstance.get(`/users/notification/`);
         setNotifications(res.data);
       } catch (err) {
         console.log(err);
@@ -57,7 +57,7 @@ const Topbar = () => {
     setSearch(e.target.value);
     try {
       if (!e.target.value) return;
-      const res = await axios.get(
+      const res = await axiosInstance.get(
         `/users/search?username=${e.target.value.toLowerCase()}`
       );
       setUserResult(res.data);
@@ -75,7 +75,7 @@ const Topbar = () => {
   useEffect(() => {
     const getChatNotification = async () => {
       try {
-        const res = await axios.get(`/message/unseen/message`);
+        const res = await axiosInstance.get(`/message/unseen/message`);
         setNotificationsChat(
           res.data.filter((coversation) => !!coversation.length)
         );

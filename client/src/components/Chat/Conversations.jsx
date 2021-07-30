@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import { DeleteForever } from "@material-ui/icons";
@@ -28,7 +28,7 @@ const Conversations = ({
     const getUser = async () => {
       if (!friendId) return;
       try {
-        const res = await axios.get(`/users/user?userId=${friendId}`);
+        const res = await axiosInstance.get(`/users/user?userId=${friendId}`);
         setUser(res.data);
       } catch (err) {
         console.log(err);

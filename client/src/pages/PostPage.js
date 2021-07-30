@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation } from 'react-router-dom';
 import styled from "styled-components";
-import axios from "axios";
+import axiosInstance from "../util/axiosInstance";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -31,7 +31,7 @@ const PostPage = () => {
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                const res = await axios.get(`/users/user?userId=${post.userId}`);
+                const res = await axiosInstance.get(`/users/user?userId=${post.userId}`);
                 setUser(res.data);
             } catch (err) {
                 console.log(err);
@@ -56,7 +56,7 @@ const PostPage = () => {
 
     const likeHandler = async () => {
         try {
-            const res = await axios.put(`/posts/${post._id}/like`);
+            const res = await axiosInstance.put(`/posts/${post._id}/like`);
             if (res.data.like) {
                 //Check
                 const data = {
@@ -76,7 +76,7 @@ const PostPage = () => {
 
     const handleSavePost = async () => {
         try {
-            await axios.put(`/posts/bookmark/post/${post._id}`);
+            await axiosInstance.put(`/posts/bookmark/post/${post._id}`);
             setBookmark((prevBookMark) => !prevBookMark);
         } catch (err) {
             console.log(err);

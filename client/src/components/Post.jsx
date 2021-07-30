@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../util/axiosInstance";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -28,7 +28,7 @@ const Post = ({ post, update }) => {
     let mounted = true;
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`/users/user?userId=${post?.userId}`);
+        const res = await axiosInstance.get(`/users/user?userId=${post?.userId}`);
         if (mounted) {
           setUser(res.data);
           setBookmark(post.bookmark.includes(currentUser?._id));
@@ -48,7 +48,7 @@ const Post = ({ post, update }) => {
 
   const likeHandler = async () => {
     try {
-      const res = await axios.put(`/posts/${post._id}/like`);
+      const res = await axiosInstance.put(`/posts/${post._id}/like`);
       console.log(res.data);
       if (res.data.like) {
         //Check
@@ -69,7 +69,7 @@ const Post = ({ post, update }) => {
 
   const handleSavePost = async () => {
     try {
-      await axios.put(`/posts/bookmark/post/${post._id}`);
+      await axiosInstance.put(`/posts/bookmark/post/${post._id}`);
       setBookmark((prevBookMark) => !prevBookMark);
     } catch (err) {
       console.log(err);

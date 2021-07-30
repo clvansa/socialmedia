@@ -4,7 +4,7 @@ import SmallChatMessanger from "../Chat/SmallChatMessanger";
 import { SocketContext } from "../../context/SocketContext";
 import { AuthContext } from "../../context/AuthContext";
 import { Search } from "@material-ui/icons";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Online from "./Online";
 
 const Contact = () => {
@@ -19,7 +19,7 @@ const Contact = () => {
   const getFriends = async () => {
     try {
       if (!currentUser?._id) return;
-      const friendList = await axios.get(`/users/friends/${currentUser?._id}`);
+      const friendList = await axiosInstance.get(`/users/friends/${currentUser?._id}`);
       setFriendsOnline(friendList.data);
     } catch (err) {
       console.log(err);
@@ -50,8 +50,8 @@ const Contact = () => {
     };
 
     try {
-      const newConv = await axios.post("/conversation", newConversation);
-      const res = await axios.get(
+      const newConv = await axiosInstance.post("/conversation", newConversation);
+      const res = await axiosInstance.get(
         `/conversation/find/${currentUser?._id}/${userId}`
       );
       setCurrentChat(res.data);
@@ -61,7 +61,7 @@ const Contact = () => {
       if (friendName) {
         setFriendName(friendName);
       } else {
-        const getFriend = await axios.get(`/users/user?userId=${userId}`);
+        const getFriend = await axiosInstance.get(`/users/user?userId=${userId}`);
         setFriendName(getFriend.data.username);
       }
     } catch (err) {

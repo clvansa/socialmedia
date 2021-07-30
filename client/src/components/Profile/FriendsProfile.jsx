@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Moment from "moment";
 
 const FriendsProfile = ({ user }) => {
@@ -16,7 +16,7 @@ const FriendsProfile = ({ user }) => {
     const getFriends = async () => {
       try {
         if (!user?._id) return;
-        const friendList = await axios.get(`/users/friends/${user?._id}`);
+        const friendList = await axiosInstance.get(`/users/friends/${user?._id}`);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -30,7 +30,7 @@ const FriendsProfile = ({ user }) => {
     if (!user?._id) return;
     const getFollowers = async () => {
       try {
-        const res = await axios.get(`/users/followers/${user?._id}`);
+        const res = await axiosInstance.get(`/users/followers/${user?._id}`);
         setFollowers(res.data);
       } catch (err) {
         console.log(err);

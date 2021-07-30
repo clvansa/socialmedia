@@ -5,7 +5,7 @@ import { CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import EmailIcon from '@material-ui/icons/Email';
-import axios from 'axios';
+import {axiosInstance} from '../util/axiosInstance';
 
 const ForgetPassword = ({ history }) => {
 
@@ -17,7 +17,7 @@ const ForgetPassword = ({ history }) => {
     const handleClick = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(`/auth/forgotpassword`, { email: email.current.value })
+            const res = await axiosInstance.post(`/auth/forgotpassword`, { email: email.current.value })
             setStep(2)
         } catch (err) {
             console.log(err)

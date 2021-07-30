@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../util/axiosInstance";
 
 const TagMenu = ({ user, setTagValue }) => {
   const [following, setFollowing] = useState([]);
@@ -10,7 +10,7 @@ const TagMenu = ({ user, setTagValue }) => {
     if (!user._id) return;
     const getFollowings = async () => {
       try {
-        const res = await axios.get(`/users/friends/${user._id}`);
+        const res = await axiosInstance.get(`/users/friends/${user._id}`);
         setFollowing(res.data);
       } catch (err) {
         console.log(err);

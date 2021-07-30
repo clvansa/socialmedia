@@ -11,7 +11,7 @@ import {
 } from "@material-ui/icons";
 import CloseFriend from "./CloseFriend";
 import { AuthContext } from "../../context/AuthContext";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { Link, useLocation } from "react-router-dom";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
 
@@ -23,7 +23,7 @@ const Sidebar = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const res = await axios.get(`/users/suggestedfriends`);
+        const res = await axiosInstance.get(`/users/suggestedfriends`);
         setFollowers(res.data);
       } catch (err) {
         console.log(err);

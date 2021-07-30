@@ -2,10 +2,10 @@ import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import Share from "./Share";
 import styled from "styled-components";
 import Post from "./Post";
-import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { CircularProgress, Paper, Container } from "@material-ui/core";
 import PostSkeleton from "./Skeletons/PostSkeleton";
+import {axiosInstance} from "../util/axiosInstance"
 
 const Feed = ({ username, video, bookmark }) => {
   const [posts, setPosts] = useState([]);
@@ -15,6 +15,7 @@ const Feed = ({ username, video, bookmark }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [loadMore, setLoadMore] = useState(true);
   const observer = useRef();
+
 
   const lastItem = useCallback(
     (element) => {
@@ -47,12 +48,12 @@ const Feed = ({ username, video, bookmark }) => {
     const fetchPosts = async () => {
       try {
         const res = video
-          ? await axios.get(`/posts/timeline/video?count=5&page=${page}`)
+          ? await axiosInstance.get(`/posts/timeline/video?count=5&page=${page}`)
           : username
-          ? await axios.get(`/posts/profile/${username}?count=5&page=${page}`)
+          ? await axiosInstance.get(`/posts/profile/${username}?count=5&page=${page}`)
           : bookmark
-          ? await axios.get(`/posts/timeline/bookmark?count=5&page=${page}`)
-          : await axios.get(`/posts/timeline/post?count=5&page=${page}`);
+          ? await axiosInstance.get(`api/posts/timeline/bookmark?count=5&page=${page}`)
+          : await axiosInstance.get(`/posts/timeline/post?count=5&page=${page}`);
         if (res.data.length === 0) setLoadMore(false);
 
         await setPosts((prevPost) => [...prevPost, ...res.data]);

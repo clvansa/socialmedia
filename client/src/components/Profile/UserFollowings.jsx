@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 
 const UserFollowings = ({ user, setValue }) => {
   const [friends, setFriends] = useState([]);
@@ -11,7 +11,7 @@ const UserFollowings = ({ user, setValue }) => {
     if (!user?._id) return;
     const getFriends = async () => {
       try {
-        const friendList = await axios.get(`/users/friends/${user?._id}`);
+        const friendList = await axiosInstance.get(`/users/friends/${user?._id}`);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);

@@ -7,7 +7,7 @@ import { Button } from '@material-ui/core';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { resetPasswordSchema } from '../util/yupSchema'
-import axios from 'axios'
+import {axiosInstance} from '../util/axiosInstance';
 
 const ResetPassword = (props) => {
     const { isFetching, error } = useContext(AuthContext)
@@ -21,7 +21,7 @@ const ResetPassword = (props) => {
         console.log(data)
         const resetToken = props.match.params.resetToken;
         try {
-            const res = await axios.put(`/auth/resetpassword/${resetToken}`, { password: data.password })
+            const res = await axiosInstance.put(`/auth/resetpassword/${resetToken}`, { password: data.password })
             history.push('/login')
         } catch (err) {
             setError('password', {

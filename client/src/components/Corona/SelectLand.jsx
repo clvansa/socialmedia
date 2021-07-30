@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FormControl, Select, MenuItem } from "@material-ui/core";
 import styled from "styled-components";
-import axios from "axios";
 import { Avatar } from "@material-ui/core";
 
 const SelectLand = ({

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import Emoji from "../Chat/Emoji";
 
 const CommentInput = ({ user, postId, setComments, hasComment }) => {
@@ -19,7 +19,7 @@ const CommentInput = ({ user, postId, setComments, hasComment }) => {
         text: comment,
       };
       try {
-        const res = await axios.post("/comments/", newComment);
+        const res = await axiosInstance.post("/comments/", newComment);
         setComments((prevState) => [res.data, ...prevState]);
         setComment("");
       } catch (err) {

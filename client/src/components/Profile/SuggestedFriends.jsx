@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import SuggestedCarousel from "./SuggestedCarousel";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 
 const SuggestedFriends = () => {
   const [suggestedFriends, setSuggestedFriends] = useState([]);
@@ -9,7 +9,7 @@ const SuggestedFriends = () => {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const res = await axios.get(`/users/suggestedfriends`);
+        const res = await axiosInstance.get(`/users/suggestedfriends`);
         setSuggestedFriends(res.data);
       } catch (err) {
         console.log(err);

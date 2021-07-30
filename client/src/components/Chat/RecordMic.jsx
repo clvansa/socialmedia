@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from "react";
-import axios from "axios";
+import {axiosInstance} from "../../util/axiosInstance";
 import { Mic } from "@material-ui/icons";
 import { Button, IconButton } from "@material-ui/core";
 import styled from "styled-components";
@@ -67,7 +67,7 @@ const RecordMic = ({
     console.log(data);
     setFileBlob(file);
     try {
-      const res = await axios.post("/upload/chat", data, {
+      const res = await axiosInstance.post("/upload/chat", data, {
         headers: {
           Range: [25, 1626753100061],
         },
@@ -93,7 +93,7 @@ const RecordMic = ({
 
     sendMessageToSocket(dataToSocket);
     try {
-      const res = await axios.post("/message/", message);
+      const res = await axiosInstance.post("/message/", message);
       setMessages((prevMessages) => [res.data, ...prevMessages]);
     } catch (err) {
       console.log(err);
