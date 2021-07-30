@@ -1,0 +1,94 @@
+body::-webkit-scrollbar {
+  width: 1em;
+}
+ 
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+/* body::-webkit-scrollbar {
+  width: 20px;               
+}
+
+body::-webkit-scrollbar-track {
+  background: gray;        
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(54, 54, 230);   
+  border-radius: 20px;       
+  border: 3px solid gray;  
+} */
+
+a:link {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited {
+  color: inherit;
+}
+
+.content-css span:nth-child(2) {
+  color: red;
+  padding-left: 5px;
+}
+
+.my-anchor-css-class {
+  color: red;
+  font-size: 14px;
+}
+
+.react-multiple-carousel__arrow {
+  z-index: 5 !important;
+}
+.react-multi-carousel-item {
+  width: 140px !important;
+}
+
+.react-multiple-carousel__arrow--right {
+  right: calc(0% + 1px) !important;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: calc(0% + 1px) !important;
+}
+
+@keyframes fade {
+  0% {
+    color: gray;
+  }
+  100% {
+    color: red;
+  }
+}
+
+.MuiList-padding {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.MuiPaper-root {
+  /* background-color: transparent !important; */
+}
+
+.MuiFormLabel-root {
+  color: inherit !important;
+}
+
+.MuiInputBase-root {
+  color: inherit !important;
+}
+
+.MuiInput-underline:after {
+  border-color: inherit !important;
+}
+
+/* .MuiButtonBase-root {
+  color: inherit !important;
+} */
