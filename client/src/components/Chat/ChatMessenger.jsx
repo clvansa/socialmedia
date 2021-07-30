@@ -231,11 +231,11 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
 
   return (
     <>
-      <ChatBox>
+      <ChatBox smallChat={smallChat}>
         <ChatBoxWrapper>
           {currentChat ? (
             <>
-              <ChatBoxTop>
+              <ChatBoxTop >
                 {items}
                 {isLoading && (
                   <div
@@ -318,7 +318,7 @@ export default ChatMessenger;
 
 const ChatBox = styled.div`
   flex: 5;
-  width: calc(100% - 50px);
+  width: ${props => props.smallChat ? '100%': 'calc(100% - 50px)'} ;
   height: 100%;
 `;
 

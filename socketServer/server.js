@@ -6,7 +6,7 @@ const io = require('socket.io')(server, {
     cors: "*",
     methods: ["GET", "POST"]
 });
-const PORT = 5100;
+const PORT = process.env.PORT || 5100;
 
 
 let users = [];
