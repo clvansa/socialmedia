@@ -27,7 +27,7 @@ import { ThemeProvider } from 'styled-components';
 import { themes } from './util/themes'
 import ResetPassword from './pages/ResetPassword';
 
-const socket = io("https://82.165.111.158")
+const socket = io()
 
 
 
