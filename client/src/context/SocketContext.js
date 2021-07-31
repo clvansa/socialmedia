@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import Peer from 'simple-peer'
 
 const SocketContext = createContext();
-const socket = io("http://82.165.111.158");
+const socket = io("https://82.165.111.158");
 
 const SocketContextProvider = ({ children }) => {
     const [stream, setStream] = useState();

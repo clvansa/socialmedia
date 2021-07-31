@@ -15,6 +15,7 @@ import TagMenu from "./TagMenu";
 import TagLists from "./TagLists";
 import FeelingLists from "./FeelingLists";
 import { Tooltip } from "@material-ui/core";
+import axios from "axios";
 
 const Share = (props) => {
   const { user } = useContext(AuthContext);
@@ -33,7 +34,7 @@ const Share = (props) => {
 
   const getLocation = async () => {
     try {
-      const res = await axiosInstance.get(
+      const res = await axios.get(
         `https://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOLOCATION_API_KEY}&location=${location.coordinates.lat},${location.coordinates.lan}&includeRoadMetadata=true&includeNearestIntersection=true`
       );
       setCurrentCity(res.data.results[0].locations[0].adminArea3);
