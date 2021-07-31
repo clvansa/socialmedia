@@ -6,7 +6,7 @@ const InfoBox = ({ title, cases, total, isRed, active, ...props }) => {
 
   return (
     <InfoBoxContainer onClick={props.onClick} active={active} isRed={isRed}>
-      <InfoBoxImg src={`${PF}corona/${title}.png`} />
+      <InfoBoxImg src={`${PF}corona/${title.toLowerCase()}.png`} />
       <CardContent>
         <TypographyCss>{title}</TypographyCss>
         <Cases isRed={isRed}>{cases}</Cases>
