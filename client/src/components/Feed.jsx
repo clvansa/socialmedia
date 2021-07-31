@@ -52,7 +52,7 @@ const Feed = ({ username, video, bookmark }) => {
           : username
           ? await axiosInstance.get(`/posts/profile/${username}?count=5&page=${page}`)
           : bookmark
-          ? await axiosInstance.get(`api/posts/timeline/bookmark?count=5&page=${page}`)
+          ? await axiosInstance.get(`/posts/timeline/bookmark?count=5&page=${page}`)
           : await axiosInstance.get(`/posts/timeline/post?count=5&page=${page}`);
         if (res.data.length === 0) setLoadMore(false);
 
