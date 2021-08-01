@@ -2,8 +2,8 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const Notification = require('../models/Notification');
-const { Auth } = require('../middleware/authorize')
-
+const { Auth } = require('../middleware/authorize');
+const { encrypt } = require('../util/encript');
 
 // Update User 
 router.put('/', Auth, async (req, res) => {
@@ -44,14 +44,17 @@ router.delete('/:id', async (req, res) => {
 
 // Get User
 
-router.get('/myuser', Auth, async (req, res) => {
+router.get('/myuser', Auth, async (req, res, next) => {
 
     try {
         const user = await User.findById(req.user._id)
         !user && res.status(404).json('user not found')
-        res.status(200).json(user)
+
+        let encrypted = await encrypt(user).then((data) => data)
+        res.status(200).json(encrypted)
     } catch (err) {
-        console.log(err)
+        console.log(err);
+        next()
     }
 
 });
@@ -66,8 +69,9 @@ router.get('/user', Auth, async (req, res, next) => {
             ? await User.findById(userId)
             : await User.findOne({ username: username })
         !user && res.status(404).json('user not found')
-        const { password, updatedAt, ...other } = user._doc
-        res.status(200).json(other)
+        const { password, updatedAt, ...other } = user._doc;
+        let encrypted = await encrypt(other).then((data) => data)
+        res.status(200).json(encrypted)
     } catch (err) {
         console.log(err)
         // return res.status(403).json("User not found")

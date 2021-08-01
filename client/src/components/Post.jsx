@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import styled from "styled-components";
-import {axiosInstance} from "../util/axiosInstance";
+import { axiosInstance } from "../util/axiosInstance";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -12,6 +12,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import { IconButton, Tooltip } from "@material-ui/core";
 import Comments from "./Comment/Comments";
 import { SocketContext } from "../context/SocketContext";
+import decrypt from "../util/decrypt";
 
 const Post = ({ post, update }) => {
   const [like, setLike] = useState(post.likes.length);
@@ -28,10 +29,14 @@ const Post = ({ post, update }) => {
     let mounted = true;
     const fetchUser = async () => {
       try {
-        const res = await axiosInstance.get(`/users/user?userId=${post?.userId}`);
+        const res = await axiosInstance.get(
+          `/users/user?userId=${post?.userId}`
+        );
         if (mounted) {
-          setUser(res.data);
+          const decrypted = await decrypt(res.data).then((data) => data);
+          setUser(decrypted);
           setBookmark(post.bookmark.includes(currentUser?._id));
+          // console.clear()
         }
       } catch (err) {
         console.log(err);

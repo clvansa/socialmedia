@@ -1,5 +1,8 @@
 import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE, USER, LOADING, LOGOUT } from './type';
-import { axiosInstance  } from '../util/axiosInstance';
+import { axiosInstance } from '../util/axiosInstance';
+import CryptoJS from 'crypto-js'
+import decrypt from '../util/decrypt';
+
 
 
 
@@ -42,9 +45,11 @@ export const GetOwnUser = async (dispatch) => {
         dispatch({ type: LOGIN_START })
         await isAuthorization()
         const res = await axiosInstance.get(`/users/myuser`)
+        let result = await decrypt(res.data).then((data) => data)
+
         dispatch({
             type: USER,
-            payload: res.data
+            payload: result
         })
     } catch (err) {
         console.log(err)

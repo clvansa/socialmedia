@@ -4,6 +4,7 @@ import {axiosInstance} from "../../util/axiosInstance";
 import { format } from "timeago.js";
 import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
+import decrypt from '../../util/decrypt'
 
 const UnseenMessage = ({ notification, messageLength }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -33,9 +34,9 @@ const UnseenMessage = ({ notification, messageLength }) => {
     const getUser = async () => {
       try {
         const res = await axiosInstance.get(`/users/user?userId=${lastMessage.sender}`);
-        console.log(lastMessage.sender);
+        const decrypted = await decrypt(res.data).then((data) => data);
         if (mounted) {
-          setSender(res.data);
+          setSender(decrypted);
         }
       } catch (err) {
         console.log(err);

@@ -8,7 +8,7 @@ import React, {
 import styled from "styled-components";
 import { AuthContext } from "../../context/AuthContext";
 import Message from "./Message";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import ChatMessagerInput from "./ChatMessagerInput";
 import { Avatar, CircularProgress, IconButton } from "@material-ui/core";
 import Picker, { SKIN_TONE_MEDIUM_DARK } from "emoji-picker-react";
@@ -17,6 +17,7 @@ import VideoOptions from "./VideoOptions";
 import { SocketContext } from "../../context/SocketContext";
 import Emoji from "./Emoji";
 import RecordMic from "./RecordMic";
+import decrypt from "../../util/decrypt";
 
 const ChatMessenger = ({ currentChat, smallChat }) => {
   const { user } = useContext(AuthContext);
@@ -156,7 +157,8 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
 
       try {
         const res = await axiosInstance.get(`/users/user?userId=${friendId}`);
-        setCurrentFriend(res.data);
+        const decrypted = await decrypt(res.data).then((data) => data);
+        setCurrentFriend(decrypted);
       } catch (err) {
         console.log(err);
       }
@@ -235,7 +237,7 @@ const ChatMessenger = ({ currentChat, smallChat }) => {
         <ChatBoxWrapper>
           {currentChat ? (
             <>
-              <ChatBoxTop >
+              <ChatBoxTop>
                 {items}
                 {isLoading && (
                   <div
@@ -318,7 +320,7 @@ export default ChatMessenger;
 
 const ChatBox = styled.div`
   flex: 5;
-  width: ${props => props.smallChat ? '100%': 'calc(100% - 50px)'} ;
+  width: ${(props) => (props.smallChat ? "100%" : "calc(100% - 50px)")};
   height: 100%;
 `;
 

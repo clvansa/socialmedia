@@ -5,6 +5,8 @@ import { Button, Avatar } from "@material-ui/core/";
 import { Call, CallEnd } from "@material-ui/icons";
 import {axiosInstance} from "../../util/axiosInstance";
 import Ring from "../../audioList/Tone-ringback.mp3";
+import decrypt from "../../util/decrypt";
+
 
 const VideoNotifications = () => {
   const { answerCall, call, callAccepted, leaveCall, videoUsersId } =
@@ -20,7 +22,9 @@ const VideoNotifications = () => {
     const getUser = async () => {
       try {
         const res = await axiosInstance.get(`/users/user?userId=${findUser.userId}`);
-        setCaller(res.data);
+        const decrypted = await decrypt(res.data).then((data) => data);
+
+        setCaller(decrypted);
       } catch (err) {
         console.log(err);
       }

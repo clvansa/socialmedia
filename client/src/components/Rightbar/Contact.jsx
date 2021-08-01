@@ -4,8 +4,9 @@ import SmallChatMessanger from "../Chat/SmallChatMessanger";
 import { SocketContext } from "../../context/SocketContext";
 import { AuthContext } from "../../context/AuthContext";
 import { Search } from "@material-ui/icons";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import Online from "./Online";
+import decrypt from "../../util/decrypt";
 
 const Contact = () => {
   const [friendsOnline, setFriendsOnline] = useState([]);
@@ -19,7 +20,9 @@ const Contact = () => {
   const getFriends = async () => {
     try {
       if (!currentUser?._id) return;
-      const friendList = await axiosInstance.get(`/users/friends/${currentUser?._id}`);
+      const friendList = await axiosInstance.get(
+        `/users/friends/${currentUser?._id}`
+      );
       setFriendsOnline(friendList.data);
     } catch (err) {
       console.log(err);
@@ -50,7 +53,10 @@ const Contact = () => {
     };
 
     try {
-      const newConv = await axiosInstance.post("/conversation", newConversation);
+      const newConv = await axiosInstance.post(
+        "/conversation",
+        newConversation
+      );
       const res = await axiosInstance.get(
         `/conversation/find/${currentUser?._id}/${userId}`
       );
@@ -61,8 +67,11 @@ const Contact = () => {
       if (friendName) {
         setFriendName(friendName);
       } else {
-        const getFriend = await axiosInstance.get(`/users/user?userId=${userId}`);
-        setFriendName(getFriend.data.username);
+        const getFriend = await axiosInstance.get(
+          `/users/user?userId=${userId}`
+        );
+        const decrypted = await decrypt(getFriend.data).then((data) => data);
+        setFriendName(decrypted.username);
       }
     } catch (err) {
       console.log(err);
@@ -140,7 +149,6 @@ const SearchInput = styled.input`
   background-color: inherit;
   border-bottom: 1px solid ${(props) => props.theme.grayColor};
   color: ${(props) => props.theme.tintColorSecondary};
-
 
   &:focus {
     outline: none;

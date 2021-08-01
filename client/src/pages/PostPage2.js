@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams, useLocation, useHistory } from 'react-router-dom';
 import styled from "styled-components";
-import {axiosInstance} from "../util/axiosInstance";
+import { axiosInstance } from "../util/axiosInstance";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
@@ -14,6 +14,7 @@ import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import { IconButton, Tooltip, Button } from "@material-ui/core";
 import Comments from "../components/Comment/Comments";
+import decrypt from '../util/decrypt'
 
 
 
@@ -38,12 +39,12 @@ const PostPage = (props) => {
             try {
                 const res = await axiosInstance.get(`/posts/${postId}`)
                 const resUser = await axiosInstance.get(`/users/user?userId=${res.data.userId}`)
-
+                const decrypted = await decrypt(resUser.data).then((data) => data)
                 if (mounted) {
                     setPost(res.data)
                     setIsLiked(res.data.likes.includes(currentUser._id))
                     setLike(res.data.likes.length)
-                    setUser(resUser.data)
+                    setUser(decrypted)
                 }
 
             } catch (err) {

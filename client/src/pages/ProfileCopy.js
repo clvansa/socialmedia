@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import styled from 'styled-components';
 import Topbar from '../components/Header/Topbar';
 import Feed from '../components/Feed';
-import {axiosInstance} from '../util/axiosInstance';
+import { axiosInstance } from '../util/axiosInstance';
 import { useParams } from 'react-router';
 import { AuthContext } from '../context/AuthContext';
 
@@ -18,6 +18,7 @@ import SuggestedFriends from '../components/Profile/SuggestedFriends';
 import FollowButton from '../components/Profile/FollowButton';
 import ContactContianer from '../components/Rightbar/ContactContianer';
 import ChangeProfileImages from '../components/Profile/ChangeProfileImages';
+import decrypt from '../util/decrypt';
 
 
 const Profile = () => {
@@ -29,11 +30,16 @@ const Profile = () => {
     const { user: currentUser } = useContext(AuthContext);
 
     useEffect(() => {
+        let mounted = true;
         const fetchUser = async () => {
-            const res = await axiosInstance.get(`/users/user?username=${username}`)
-            setUser(res.data)
+            const res = await axiosInstance.get(`/users/user?username=${username}`);
+            const decrypted = await decrypt(res.data).then((data) => data)
+            if (mounted) {
+                setUser(decrypted)
+            }
         }
         fetchUser()
+        return () => mounted = false
     }, [username])
 
     useEffect(() => {

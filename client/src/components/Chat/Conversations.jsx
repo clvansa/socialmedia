@@ -5,6 +5,8 @@ import { format } from "timeago.js";
 import { DeleteForever } from "@material-ui/icons";
 import { Tooltip, Button } from "@material-ui/core";
 import useOutside from "../../util/useOutside";
+import decrypt from "../../util/decrypt";
+
 
 const Conversations = ({
   conversation,
@@ -29,7 +31,8 @@ const Conversations = ({
       if (!friendId) return;
       try {
         const res = await axiosInstance.get(`/users/user?userId=${friendId}`);
-        setUser(res.data);
+        const decrypted = await decrypt(res.data).then((data) => data);
+        setUser(decrypted);
       } catch (err) {
         console.log(err);
       }
