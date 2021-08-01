@@ -17,14 +17,13 @@ const Message = ({ message, own, currentFriend, currentUser, smallChat }) => {
           own={own}
         />
         <MessageText own={own} smallChat={smallChat}>
-          {message?.text && message.text.includes("www.") ? (
-            <a
+          {message?.text &&( message.text.includes("www.")  ||  message.text.includes("https")) ? (
+            <LinkMesage
               href={`https://${message.text}`}
               target="_blank"
-              style={{ textDecoration: "underline ", color: "blue" }}
             >
               {message.text}
-            </a>
+            </LinkMesage>
           ) : (
             message.text
           )}
@@ -111,3 +110,10 @@ const Audio = styled.audio`
     /* display: none; */
   }
 `;
+
+
+const LinkMesage = styled.a `
+  font-size: 14px;
+  text-decoration: underline !important;
+  color: blue !important;
+`

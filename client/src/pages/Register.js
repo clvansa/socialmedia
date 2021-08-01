@@ -1,4 +1,4 @@
-import {axiosInstance} from '../util/axiosInstance';
+import { axiosInstance } from '../util/axiosInstance';
 import React, { useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
@@ -102,17 +102,23 @@ const Register = () => {
 export default Register
 
 const LoginContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: calc(100vh - 20px);
     background-color: ${props => props.theme.backgroundColor};
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-bottom: 20px;
+
 `
 const LoginWrapper = styled.div`
     width: 70%;
-    height:70%;
+    height:100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
 
 `
 const LoginLeft = styled.div`
@@ -120,6 +126,7 @@ const LoginLeft = styled.div`
     flex-direction: column;
     flex:1;
     justify-content:center ;
+    min-width: 350px;
 
 `
 const LoginLogo = styled.h3`
@@ -132,6 +139,7 @@ const LoginDesc = styled.span`
     font-size: 24px;
     padding-right: 20px;
     color:${props => props.theme.tintColorPrimary};
+    padding-bottom: 20px;
 `
 
 const LoginRight = styled.div`
@@ -139,6 +147,7 @@ const LoginRight = styled.div`
     flex-direction: column;
     flex:1;
     justify-content:center;
+
 `
 const LoginBox = styled.form`
     max-width:450px;

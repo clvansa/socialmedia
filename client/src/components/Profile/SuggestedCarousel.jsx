@@ -28,11 +28,11 @@ const SuggestedCarousel = ({ suggestedFriends }) => {
   const [suggested, setSuggested] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  
   //Shuffle users
   useEffect(() => {
-    setSuggested(Users.sort(() => Math.random() - 0.5));
-  }, [Users]);
+    setSuggested(suggestedFriends.sort(() => Math.random() - 0.5));
+    console.log(suggestedFriends);
+  }, [suggestedFriends]);
 
   return (
     <Carousel
@@ -43,7 +43,12 @@ const SuggestedCarousel = ({ suggestedFriends }) => {
     >
       {suggested ? (
         suggested.map((friend) => (
-          <Card key={friend._id} onClick={() => console.log("handleClick")}>
+          <Card
+            key={friend._id}
+            onClick={() =>
+              (window.location.href = `/profile/${friend.username}`)
+            }
+          >
             <CardImg
               src={
                 friend.profilePicture
@@ -62,19 +67,7 @@ const SuggestedCarousel = ({ suggestedFriends }) => {
 };
 
 export default SuggestedCarousel;
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  min-width: min-content;
-  overflow-x: scroll;
-`;
-const Box = styled.div`
-  /* width: 120px; */
-  /* width: 100%; */
-  height: 100px;
-  margin: 5px;
-  background-color: red;
-`;
+
 
 const Card = styled.div`
   display: flex;
@@ -82,9 +75,7 @@ const Card = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* background-color: red; */
-  /* padding-top: 5px; */
-  /* overflow: hidden; */
+  cursor: pointer;
 `;
 const CardImg = styled.img`
   width: 100px;

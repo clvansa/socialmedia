@@ -30,7 +30,11 @@ const SmallChatMessanger = ({
       >
         <ChatContianerTopLeft>
           <ChatUserImg />
-          <ChatUsername>{friendName}</ChatUsername>
+          <LinkTag
+            onClick={() => (window.location.href = `/profile/${friendName}`)}
+          >
+            <ChatUsername>{friendName}</ChatUsername>
+          </LinkTag>
         </ChatContianerTopLeft>
         <ChatContianerTopRight>
           <IconButton onClick={closeChat} style={{ padding: "3px" }}>
@@ -92,8 +96,15 @@ const ChatUserImg = styled.img``;
 const ChatUsername = styled.span`
   color: ${(props) => props.theme.tintColorPrimary};
   padding-left: 10px;
+  
+  &:hover{
+    text-decoration: underline;
+  }
+  
 `;
 
 const CloseIcon = styled(Close)`
   color: ${(props) => props.theme.tintColorPrimary};
 `;
+
+const LinkTag = styled.a``;

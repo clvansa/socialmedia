@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Person, Search, Chat, Notifications } from "@material-ui/icons";
 import { Link, useHistory } from "react-router-dom";
 import { IconButton, Button } from "@material-ui/core";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import Notification from "./Notification";
 import useOutside from "../../util/useOutside";
 import { AuthContext } from "../../context/AuthContext";
@@ -11,6 +11,7 @@ import { SocketContext } from "../../context/SocketContext";
 import { Logout } from "../../context/AuthActions";
 import NotificationChat from "./NotificationChat";
 import ProfileMenuList from "./ProfileMenuList";
+import NotificationMessage from "./NotificationMessage";
 
 const Topbar = () => {
   const { user, dispatch } = useContext(AuthContext);
@@ -94,7 +95,7 @@ const Topbar = () => {
           <TopbarLogo>Social Media</TopbarLogo>
         </Link>
       </TopbarLeft>
-      <TopbarCenter>
+      <TopbarCenter search={search}>
         <SearchBar>
           <SearchIcon />
           <SearchInput
@@ -107,11 +108,13 @@ const Topbar = () => {
           {userResult ? (
             <SearchList>
               {userResult.map((u) => (
-                <Link to={`/profile/${u?.username}`}
-                 key={u?._id}
-                 onClick={() =>
-                  (window.location.href = `/profile/${u?.username}`)
-                }>
+                <Link
+                  to={`/profile/${u?.username}`}
+                  key={u?._id}
+                  onClick={() =>
+                    (window.location.href = `/profile/${u?.username}`)
+                  }
+                >
                   <SearchListItem>
                     <SearchListItemImg
                       src={
@@ -177,7 +180,9 @@ const Topbar = () => {
           <TopbarIconsItem ref={wrapperRef}>
             <Notifications onClick={() => setOpen(true)} />
             <Notification open={open} notifications={notifications} />
-            <TopbarIconBadge>{notifications?.length}</TopbarIconBadge>
+            {notifications?.length > 0 && (
+              <TopbarIconBadge>{notifications?.length}</TopbarIconBadge>
+            )}
           </TopbarIconsItem>
         </TopbarIcons>
         <ProfileMenuList />
@@ -253,18 +258,36 @@ const TopbarCenter = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
-  box-shadow: ${(props) =>
-    props.search && "0px 0px 16px -8px rgb(0 0 0 / 68%)"};
+  border: 1px solid ${(props) => (props.search !== "" ? props.theme.grayColor : "transparent")};
 `;
 
 const SearchContianer = styled.div`
   position: absolute;
   top: 50px;
-  left: 0;
+  left: -1px;
   background-color: ${(props) => props.theme.TopbarBackgroundColor};
   width: 100%;
   border-radius: 0 0 10px 10px;
-  box-shadow: 0px 0px 16px -8px rgb(0 0 0 / 68%);
+  box-shadow: 0px 10px 16px -8px rgb(0 0 0 / 68%);
+  border-left: 1px solid ${(props) => props.theme.grayColor};
+  border-right: 1px solid ${(props) => props.theme.grayColor};
+  border-bottom: 1px solid ${(props) => props.theme.grayColor};
+  max-height: 400px;
+  overflow: hidden;
+  &:hover {
+    overflow-y: scroll;
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: ${(props) => props.theme.hoverColorPrimary};
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: gray;
+    }
+  }
 `;
 const SearchList = styled.ul`
   list-style: none;
@@ -297,6 +320,8 @@ const SearchListItemName = styled.span`
   color: white;
   font-weight: 300;
   letter-spacing: 1px;
+  word-break: break-all;
+  white-space: nowrap;
 `;
 
 const SearchListItemType = styled.span`

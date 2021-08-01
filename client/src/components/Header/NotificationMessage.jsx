@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { format } from "timeago.js";
+import { axiosInstance } from "../../util/axiosInstance";
 
 const NotificationMessage = ({ notification }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -12,8 +13,20 @@ const NotificationMessage = ({ notification }) => {
       return " hat Like your Comment !";
     }
   };
+
+  const handleClick = async () => {
+    try {
+      const res = await axiosInstance.put(
+        `/users/notification/${notification._id}`
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  
   return (
-    <NotificationMessageContainer>
+    <NotificationMessageContainer onClick={handleClick}>
       <NotificationMessageWrapper>
         <NotificationMessageTop>
           <NotificationMessageImage

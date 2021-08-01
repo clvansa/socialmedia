@@ -2,24 +2,16 @@ import { useState } from "react";
 import styled from "styled-components";
 import NotificationMessage from "./NotificationMessage";
 import Modal from "./Modal";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 const Notification = ({ open, notifications }) => {
-  const [openModal, setOpenModal] = useState(false);
-  const [postId, setPostId] = useState("");
   const history = useHistory();
 
   const handleOpen = (postId) => {
-    setPostId(postId);
-    // setOpenModal(true);
     history.push(`/post/${postId}`);
   };
 
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-
-  return (
+  return notifications.length > 0 ? (
     <>
       <NotificationContainer open={open}>
         {notifications.map((notification) => (
@@ -31,14 +23,12 @@ const Notification = ({ open, notifications }) => {
           </div>
         ))}
       </NotificationContainer>
-      {openModal && (
-        <Modal
-          handleOpen={handleOpen}
-          handleClose={handleClose}
-          open={openModal}
-          postId={postId}
-        />
-      )}
+    </>
+  ) : (
+    <>
+    <NotificationContainer open={open}>
+      <p>No Notification</p>
+    </NotificationContainer>
     </>
   );
 };
@@ -58,4 +48,7 @@ const NotificationContainer = styled.div`
   display: ${(props) => (props.open ? "flex" : "none")};
   overflow: hidden;
   padding: 10px;
+  color: ${(props) => props.theme.tintColorSecondary};
+
 `;
+

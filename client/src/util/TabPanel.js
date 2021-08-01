@@ -38,6 +38,7 @@ const Container = styled.div`
     align-items: flex-start;
     padding-top: 40px;
     flex-wrap: wrap;
+    padding-bottom: 40px;
     background-color: ${props => props.theme.backgroundColor};
 
     @media (max-width : 1039px){

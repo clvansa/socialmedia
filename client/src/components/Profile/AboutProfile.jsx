@@ -98,9 +98,11 @@ const AboutProfileContainer = styled.div`
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   /* min-height: 100vh; */
-  min-width: 800px;
-  width: 100%;
+  width: calc(100vw - 100px);
+  max-width: 800px;
   border-radius: 10px;
+  justify-items: center;
+  margin-left: 30px;
   background-color: ${(props) => props.theme.backgroundColorSecondary};
 `;
 const AboutProfileWrapper = styled.div`

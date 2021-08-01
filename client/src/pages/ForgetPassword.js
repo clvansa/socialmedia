@@ -99,13 +99,13 @@ const ForgetPassword = ({ history }) => {
 export default ForgetPassword
 
 const LoginContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: calc(100vh - 20px);
     background-color: ${props => props.theme.backgroundColor};
     display: flex;
     justify-content: center;
     align-items: center;
-
+    padding-bottom: 20px;
    
     `
 
@@ -134,6 +134,8 @@ const LoginDesc = styled.span`
     font-size: 24px;
     padding-right: 20px;
     color:${props => props.theme.tintColorPrimary};
+    padding-bottom: 20px;
+
 `
 
 const LoginRight = styled.div`

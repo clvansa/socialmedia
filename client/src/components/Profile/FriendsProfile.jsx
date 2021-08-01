@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import Moment from "moment";
 
 const FriendsProfile = ({ user }) => {
@@ -16,7 +16,9 @@ const FriendsProfile = ({ user }) => {
     const getFriends = async () => {
       try {
         if (!user?._id) return;
-        const friendList = await axiosInstance.get(`/users/friends/${user?._id}`);
+        const friendList = await axiosInstance.get(
+          `/users/friends/${user?._id}`
+        );
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -125,6 +127,7 @@ const FriendsProfileWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   /* flex-wrap: wrap; */
 `;
 
@@ -141,7 +144,8 @@ const RightbarFollowings = styled.div`
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   min-height: 300px;
-  min-width: 500px;
+  min-width: 350px;
+  max-width: 800px;
   margin-top: 20px;
   border-radius: 10px;
   background-color: ${(props) => props.theme.backgroundColorSecondary};
@@ -161,7 +165,9 @@ const RightbarFollowings = styled.div`
     background-color: gray;
   }
 `;
-const RightbarFollowing = styled.div``;
+const RightbarFollowing = styled.div`
+  max-width: 110px;
+`;
 
 const RightbarFollowingContianer = styled.div`
   display: flex;

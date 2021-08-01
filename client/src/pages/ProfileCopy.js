@@ -95,7 +95,8 @@ const Profile = () => {
                     </ProfileTop>
                     <ProfileBottom>
                         <TabPanel value={value} index={0} >
-                            <SuggestedFriends />
+                            {user._id === currentUser._id &&
+                                < SuggestedFriends />}
                             <Feed username={username} />
                             <ProfileBottomRight >
                                 <UserInfoRightbar user={user} setValue={setValue} />
@@ -149,10 +150,12 @@ const ProfileCover = styled.div`
 
 
 const ProfileCoverImage = styled.img`
-    width: 100%;
+    width: calc(100% - 4px);
     height: 350px;
     object-fit: cover;
     border-radius: 0 0 10px 10px;
+    border: 1px solid ${props => props.theme.grayColor};
+
 
 `
 const ProfileUserImage = styled.img`
