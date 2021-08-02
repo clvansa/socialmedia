@@ -125,7 +125,7 @@ router.get('/search', async (req, res) => {
     const username = req.query.username;
     try {
         const user = await User.find({
-            username: RegExp(username)
+            username: new RegExp(`${username}`,'i')
         }).select('username profilePicture')
         !user && res.status(404).json('user not found')
         res.status(200).json(user)
