@@ -6,6 +6,7 @@ import ChatMessagerConversation from '../components/Chat/ChatMessagerConversatio
 import Topbar from '../components/Header/Topbar';
 import { useLocation } from 'react-router-dom'
 import ChatContactContainer from '../components/Chat/ChatContactContainer';
+import ChatConversationContainer from '../components/Chat/ChatConversationContainer';
 
 const Chat = () => {
     const { user } = useContext(AuthContext);
@@ -22,11 +23,14 @@ const Chat = () => {
             <Topbar />
             <ChatContainer>
                 <ChatContainerLeft>
-                    <ChatMessagerConversation
+                    {/* <ChatMessagerConversation
                         user={user}
                         setCurrentChat={setCurrentChat}
                         currentChat={currentChat}
-                    />
+                    /> */}
+                    <ChatConversationContainer user={user}
+                        setCurrentChat={setCurrentChat}
+                        currentChat={currentChat} />
                 </ChatContainerLeft>
                 <ChatContainerCenter>
                     <ChatMessenger currentChat={currentChat}  />
@@ -52,7 +56,7 @@ const ChatContainer = styled.div`
 
 `
 const ChatContainerLeft = styled.div`
-    flex: 3;
+    /* flex: 3; */
 `
 const ChatContainerCenter = styled.div`
     flex: 6;

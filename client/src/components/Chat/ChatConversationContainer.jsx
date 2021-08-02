@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { ArrowForward, ArrowBack, Menu } from "@material-ui/icons";
 import styled from "styled-components";
-import Sidebar from "./Sidebar";
 import { IconButton } from "@material-ui/core";
 import useWindowsSize from "../../util/useWindowsSize";
+import ChatMessagerConversation from "./ChatMessagerConversation";
 
-const SidebarContainer = () => {
+const ChatConversationContainer = ({ user, setCurrentChat, currentChat }) => {
   const [view, setView] = useState(true);
   const [position, setPosition] = useState("sticky");
   const size = useWindowsSize();
@@ -36,19 +36,23 @@ const SidebarContainer = () => {
             )
           ) : (
             <IconContianer view={view}>
-            <Menu  />
-          </IconContianer>
+              <Menu  />
+            </IconContianer>
           )}
         </CustomIconButton>
         <SidebarContent style={{ width: view ? "300px" : 0 }}>
-          <Sidebar />
+          <ChatMessagerConversation
+            user={user}
+            setCurrentChat={setCurrentChat}
+            currentChat={currentChat}
+          />
         </SidebarContent>
       </SidebarWrapper>
     </Contianer>
   );
 };
 
-export default SidebarContainer;
+export default ChatConversationContainer;
 
 const Contianer = styled.div`
   min-width: 50px;
@@ -95,7 +99,7 @@ const ArrowForwardCss = styled(ArrowForward)`
 const ArrowBackCss = styled(ArrowBack)`
   color: ${(props) => props.theme.tintColorPrimary};
 `;
-
 const IconContianer = styled.div`
   color: ${(props) =>  props.theme.tintColorPrimary};
 `;
+

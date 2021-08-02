@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import {axiosInstance} from "../../util/axiosInstance";
+import { SocketContext } from "../../context/SocketContext";
+import { axiosInstance } from "../../util/axiosInstance";
 import Emoji from "../Chat/Emoji";
 
 const CommentInput = ({ user, postId, setComments, hasComment }) => {
   const [comment, setComment] = useState("");
+  const { sendNotificationToSocket } = useContext(SocketContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const handleChange = (e) => {
@@ -22,6 +24,17 @@ const CommentInput = ({ user, postId, setComments, hasComment }) => {
         const res = await axiosInstance.post("/comments/", newComment);
         setComments((prevState) => [res.data, ...prevState]);
         setComment("");
+        const post = await axiosInstance.get(`/posts/${postId}`);
+        console.log(post)
+        const data = {
+          receiverId: post.data.userId,
+          notifyType: "comment",
+          createdAt: Date.now(),
+        };
+
+        console.log(data)
+
+        sendNotificationToSocket(data);
       } catch (err) {
         console.log(err);
       }

@@ -1,12 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import {axiosInstance} from "../../util/axiosInstance";
+import { SocketContext } from "../../context/SocketContext";
+import { axiosInstance } from "../../util/axiosInstance";
 import { FOLLOW, UNFOLLOW } from "../../context/type";
 import { Button } from "@material-ui/core";
 import styled from "styled-components";
 
 const FollowButton = ({ user }) => {
   const { user: currentUser, dispatch } = useContext(AuthContext);
+  const { sendNotificationToSocket } = useContext(SocketContext);
   const [followed, setfollowed] = useState(
     currentUser?.followings.includes(user?._id)
   );
@@ -23,6 +25,15 @@ const FollowButton = ({ user }) => {
       } else {
         await axiosInstance.put(`/users/${user._id}/follow`);
         dispatch({ type: FOLLOW, payload: user._id });
+
+        const data = {
+          receiverId: user._id,
+          sender: { username: currentUser.username },
+          notifyType: "user",
+          createdAt: Date.now(),
+        };
+
+        sendNotificationToSocket(data);
       }
     } catch (err) {
       console.log(err);

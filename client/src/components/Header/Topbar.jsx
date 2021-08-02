@@ -1,57 +1,67 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { Person, Search, Chat, Notifications } from "@material-ui/icons";
-import { Link, useHistory } from "react-router-dom";
-import { IconButton, Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { axiosInstance } from "../../util/axiosInstance";
 import Notification from "./Notification";
 import useOutside from "../../util/useOutside";
 import { AuthContext } from "../../context/AuthContext";
 import { SocketContext } from "../../context/SocketContext";
-import { Logout } from "../../context/AuthActions";
 import NotificationChat from "./NotificationChat";
 import ProfileMenuList from "./ProfileMenuList";
-import NotificationMessage from "./NotificationMessage";
 
 const Topbar = () => {
-  const { user, dispatch } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { arrivalNotification, arrivalMessage, conversationId } =
     useContext(SocketContext);
 
   const [open, setOpen] = useState(false);
   const [openNotifyChat, setOpenNotifyChat] = useState(false);
+  const [openNotifyFollow, setOpenNotifyFollow] = useState(false);
   const [search, setSearch] = useState("");
   const [userResult, setUserResult] = useState([]);
   const [notificationsChat, setNotificationsChat] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [notificationsFollow, setNotificationsFollow] = useState([]);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const history = useHistory();
   const wrapperRef = useRef(null);
   const chatRef = useRef(null);
+  const followRef = useRef(null);
   useOutside(wrapperRef, setOpen);
   useOutside(chatRef, setOpenNotifyChat);
-
-  const handleLogout = () => {
-    Logout(history, dispatch);
-  };
+  useOutside(followRef, setOpenNotifyFollow);
 
   //Get Notification from Database
   useEffect(() => {
+    let mounted = true;
     const getNotifications = async () => {
       try {
         const res = await axiosInstance.get(`/users/notification/`);
-        setNotifications(res.data);
+        if (mounted) {
+          setNotifications(
+            res.data.filter(
+              (notification) => notification.notifyType !== "user"
+            )
+          );
+          setNotificationsFollow(
+            res.data.filter(
+              (notification) => notification.notifyType === "user"
+            )
+          );
+        }
       } catch (err) {
         console.log(err);
       }
     };
     getNotifications();
-  }, [open, arrivalNotification]);
+
+    return () => (mounted = false);
+  }, [open, openNotifyFollow, arrivalNotification]);
 
   //Searchbar
   useEffect(() => {
     search.trim() && setUserResult([]);
-  }, [search.trim()]);
+  }, [search]);
 
   //Search func from database
   const getUser = async (e) => {
@@ -68,24 +78,29 @@ const Topbar = () => {
   };
 
   //get Notification from socket
-  useEffect(() => {
-    arrivalNotification &&
-      setNotifications((prvState) => [...prvState, arrivalNotification]);
-  }, [arrivalNotification]);
+  // useEffect(() => {
+  //   arrivalNotification && (arrivalNotification.notifyType !== "user")
+  //     ? console.log('noti lik',arrivalNotification)
+  //     : console.log('noti user',notificationsFollow);
+  // }, [arrivalNotification]);
 
   useEffect(() => {
+    let mounted = true;
+
     const getChatNotification = async () => {
       try {
         const res = await axiosInstance.get(`/message/unseen/message`);
-        setNotificationsChat(
-          res.data.filter((coversation) => !!coversation.length)
-        );
+        if (mounted) {
+          setNotificationsChat(
+            res.data.filter((coversation) => !!coversation.length)
+          );
+        }
       } catch (err) {
         console.log(err);
       }
     };
     user && getChatNotification();
-    console.log(conversationId);
+    return () => (mounted = false);
   }, [arrivalMessage, conversationId]);
 
   return (
@@ -157,9 +172,15 @@ const Topbar = () => {
           </Link>
         </TopbarLinks>
         <TopbarIcons>
-          <TopbarIconsItem>
-            <Person />
-            <TopbarIconBadge>1</TopbarIconBadge>
+          <TopbarIconsItem ref={followRef}>
+            <Person onClick={() => setOpenNotifyFollow(true)} />
+            <Notification
+              open={openNotifyFollow}
+              notifications={notificationsFollow}
+            />
+            {!!notificationsFollow.length && (
+              <TopbarIconBadge>{notificationsFollow.length}</TopbarIconBadge>
+            )}
           </TopbarIconsItem>
 
           <TopbarIconsItem ref={chatRef}>
@@ -258,7 +279,8 @@ const TopbarCenter = styled.div`
   width: 100%;
   height: 100%;
   align-items: center;
-  border: 1px solid ${(props) => (props.search !== "" ? props.theme.grayColor : "transparent")};
+  border: 1px solid
+    ${(props) => (props.search !== "" ? props.theme.grayColor : "transparent")};
 `;
 
 const SearchContianer = styled.div`

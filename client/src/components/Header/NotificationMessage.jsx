@@ -8,9 +8,13 @@ const NotificationMessage = ({ notification }) => {
 
   const notifyType = (type) => {
     if (type === "like") {
-      return " hat Like your Post !";
+      return "hat Like your Post !";
     } else if (type === "likeComment") {
-      return " hat Like your Comment !";
+      return "hat Like your Comment !";
+    } else if (type === "user") {
+      return "hat follow you";
+    } else if (type === "comment") {
+      return "comment on your Post !";
     }
   };
 
@@ -24,7 +28,6 @@ const NotificationMessage = ({ notification }) => {
     }
   };
 
-  
   return (
     <NotificationMessageContainer onClick={handleClick}>
       <NotificationMessageWrapper>

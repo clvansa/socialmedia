@@ -38,10 +38,13 @@ const Contact = () => {
   }, [arrivalMessage]);
 
   const handleSearch = (e) => {
-    const friend = friendsOnline.find((friend) =>
-      friend.username.includes(e.target.value)
-    );
-    friend && setFriendsOnline([friend]);
+    const friend = friendsOnline.filter((friend) => {
+      if (friend.username.toLowerCase().includes(e.target.value)) {
+        return friend;
+      }
+      return;
+    });
+    friend && setFriendsOnline(friend);
     e.target.value === "" && getFriends();
   };
 

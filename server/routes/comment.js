@@ -2,13 +2,27 @@ const router = require("express").Router();
 const Comment = require('../models/Comment');
 const Notification = require('../models/Notification');
 const { Auth } = require('../middleware/authorize');
+const Post = require('../models/Post')
 
 //Create Comment 
 router.post('/', Auth, async (req, res) => {
     try {
         const newComment = await new Comment({ userId: req.user.id, ...req.body });
         await newComment.save()
+
         const comment = await Comment.findById(newComment._id).populate('userId', 'username profilePicture')
+
+        const post = await Post.findById(newComment.postId).select('userId')
+
+        const newNotifications = await new Notification({
+            notifyType: 'comment',
+            sender: req.user._id,
+            recipient: post.userId,
+            postId: comment.postId
+        })
+        await newNotifications.save()
+
+
         res.status(201).json(comment)
     } catch (err) {
         console.log(err)
@@ -60,6 +74,17 @@ router.delete('/comment/:commentId', Auth, async (req, res) => {
         if (String(comment.userId) === String(req.user._id)) {
 
             const updateComment = await comment.deleteOne({ _id: req.params.commentId })
+
+            const post = await Post.findById(comment.postId).select('userId')
+
+            await Notification.findOneAndDelete({
+                notifyType: 'comment',
+                sender: req.user._id,
+                recipient: post.userId.toString(),
+                postId: comment.postId.toString()
+            })
+
+
             return res.status(200).json('comment has been deleted')
         }
 

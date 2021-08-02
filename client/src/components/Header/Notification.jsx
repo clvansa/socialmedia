@@ -1,24 +1,23 @@
-import { useState } from "react";
 import styled from "styled-components";
 import NotificationMessage from "./NotificationMessage";
-import Modal from "./Modal";
 import { useHistory } from "react-router-dom";
 
 const Notification = ({ open, notifications }) => {
   const history = useHistory();
 
-  const handleOpen = (postId) => {
-    history.push(`/post/${postId}`);
+  const handleOpen = (notification) => {
+    if (notification.notifyType !== "user") {
+      history.push(`/post/${notification.postId}`);
+    } else {
+      history.push(`/profile/${notification.sender.username}`);
+    }
   };
 
   return notifications.length > 0 ? (
     <>
       <NotificationContainer open={open}>
         {notifications.map((notification) => (
-          <div
-            key={notification._id}
-            onClick={() => handleOpen(notification.postId)}
-          >
+          <div key={notification._id} onClick={() => handleOpen(notification)}>
             <NotificationMessage notification={notification} />
           </div>
         ))}
@@ -26,9 +25,9 @@ const Notification = ({ open, notifications }) => {
     </>
   ) : (
     <>
-    <NotificationContainer open={open}>
-      <p>No Notification</p>
-    </NotificationContainer>
+      <NotificationContainer open={open}>
+        <p>No Notification</p>
+      </NotificationContainer>
     </>
   );
 };
@@ -49,6 +48,4 @@ const NotificationContainer = styled.div`
   overflow: hidden;
   padding: 10px;
   color: ${(props) => props.theme.tintColorSecondary};
-
 `;
-

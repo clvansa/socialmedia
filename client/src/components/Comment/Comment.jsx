@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import { Avatar, Button, Tooltip } from "@material-ui/core";
 import { format } from "timeago.js";
 import MenuListComment from "./MenuListComment";
 import { AuthContext } from "../../context/AuthContext";
+import { SocketContext } from "../../context/SocketContext";
 
 const Comment = ({ comment, userId, delComment, upComment }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -12,6 +13,7 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
   const [tag, setTag] = useState("span");
   const [text, setText] = useState("span");
   const { user: currentUser } = useContext(AuthContext);
+  const { sendNotificationToSocket } = useContext(SocketContext);
   const [like, setLike] = useState(comment.likes.length);
   const [isLiked, setIsLiked] = useState(
     comment.likes.includes(currentUser._id)
@@ -29,7 +31,9 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
 
   const deleteComment = async () => {
     try {
-      const deleteOne = await axiosInstance.delete(`/comments/comment/${comment._id}`);
+      const deleteOne = await axiosInstance.delete(
+        `/comments/comment/${comment._id}`
+      );
       delComment(comment._id);
     } catch (err) {
       console.log(err);
@@ -53,10 +57,18 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
   };
 
   const handleClick = async (id) => {
-    console.log(id);
     try {
       const res = await axiosInstance.put(`/comments/${comment._id}/like`);
 
+      const data = {
+        receiverId: comment.userId._id,
+        postId: comment.postId,
+        notifyType: "likeComment",
+        sender: currentUser._id,
+        createdAt: Date.now(),
+      };
+
+      sendNotificationToSocket(data);
       setLike(res.data.like ? like + 1 : like - 1);
     } catch (err) {
       console.log(err);

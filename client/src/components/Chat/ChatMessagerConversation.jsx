@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import Conversations from "./Conversations";
 import { SocketContext } from "../../context/SocketContext";
 
@@ -38,7 +38,9 @@ const ChatMessagerConversation = ({ setCurrentChat, user, currentChat }) => {
 
   const deleteConversation = async (conversationId) => {
     try {
-      const res = await axiosInstance.delete(`/message/messages/${conversationId}`);
+      const res = await axiosInstance.delete(
+        `/message/messages/${conversationId}`
+      );
       console.log(res.data);
       setConversations(
         conversations.filter(
@@ -54,7 +56,10 @@ const ChatMessagerConversation = ({ setCurrentChat, user, currentChat }) => {
     <>
       <ChatMenu>
         <ChatMenuWrapper>
-          <ChatMenuInput placeholder="Search for friends" />
+          {/* <ChatMenuInput
+            placeholder="Search for friends"
+            onChange={handleChange}
+          /> */}
           {conversations?.map((conversation) => (
             <div
               key={conversation?._id}
@@ -102,7 +107,7 @@ const ChatMenuInput = styled.input`
   padding: 10px;
   border: none;
   border-radius: 20px;
-  /* border: 1px solid #e1e1e1; */
+  color: ${(props) => props.theme.tintColorSecondary};
   background-color: ${(props) => props.theme.inputBackgroundColor};
   &:focus {
     outline: none;

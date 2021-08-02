@@ -125,7 +125,7 @@ router.get('/search', async (req, res) => {
     const username = req.query.username;
     try {
         const user = await User.find({
-            username: new RegExp(`${username}`,'i')
+            username: new RegExp(`${username}`, 'i')
         }).select('username profilePicture')
         !user && res.status(404).json('user not found')
         res.status(200).json(user)
@@ -222,6 +222,15 @@ router.put('/:id/follow', Auth, async (req, res) => {
             if (!user.followers.includes(req.user._id)) {
                 await user.updateOne({ $push: { followers: req.user._id.toString() } });
                 await currentUser.updateOne({ $push: { followings: req.params.id } })
+
+                const newNotifications = await new Notification({
+                    notifyType: 'user',
+                    sender: req.user._id.toString(),
+                    recipient: req.params.id,
+                })
+                await newNotifications.save()
+
+
                 res.status(200).json("User has been followed")
             } else {
                 res.status(403).json("You already follow this user")
@@ -245,6 +254,13 @@ router.put('/:id/unfollow', Auth, async (req, res) => {
             if (user.followers.includes(req.user._id)) {
                 await user.updateOne({ $pull: { followers: req.user._id.toString() } });
                 await currentUser.updateOne({ $pull: { followings: req.params.id } })
+
+                await Notification.findOneAndDelete({
+                    notifyType: 'user',
+                    sender: req.user._id.toString(),
+                    recipient: req.params.id,
+                })
+
                 res.status(200).json("User has been unfollowed")
             } else {
                 res.status(403).json("You dont follow this user")

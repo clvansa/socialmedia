@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import { SocketContext } from "../../context/SocketContext";
 
 const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
@@ -26,7 +26,6 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
     }
 
     return () => (mounted = false);
-    
   }, [currentUserId]);
 
   useEffect(() => {
@@ -42,7 +41,10 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
     };
 
     try {
-      const newConv = await axiosInstance.post("/conversation/", newConversation);
+      const newConv = await axiosInstance.post(
+        "/conversation/",
+        newConversation
+      );
       const res = await axiosInstance.get(`/conversation/`);
       if (newConv.status === 200) {
         return setCurrentChat(newConv.data);
@@ -59,10 +61,15 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
-      const searchResult = friends.find((friend) =>
-        friend.username.includes(filterFriend)
-      );
-      searchResult && setFriends([searchResult]);
+ 
+      const searchResult = friends.filter((friend) => {
+        if (friend.username.toLowerCase().includes(filterFriend)) {
+          return  friend
+        };
+        return 
+      });
+
+      searchResult && setFriends(searchResult);
       filterFriend === "" && getFriends();
     }
     return () => (mounted = false);
