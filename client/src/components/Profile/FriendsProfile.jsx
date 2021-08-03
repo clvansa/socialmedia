@@ -164,6 +164,10 @@ const RightbarFollowings = styled.div`
   ::-webkit-scrollbar-thumb {
     background-color: gray;
   }
+
+  @media (max-width: 400px) {
+    min-width: calc(100% - 30px);
+  }
 `;
 const RightbarFollowing = styled.div`
   max-width: 110px;

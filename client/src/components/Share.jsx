@@ -10,7 +10,7 @@ import {
   EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
-import {axiosInstance} from "../util/axiosInstance";
+import { axiosInstance } from "../util/axiosInstance";
 import TagMenu from "./TagMenu";
 import TagLists from "./TagLists";
 import FeelingLists from "./FeelingLists";
@@ -292,7 +292,6 @@ export default Share;
 const ShareContianer = styled.div`
   width: 100%;
   max-width: 660px;
-  /* height: 170px; */
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
@@ -300,6 +299,7 @@ const ShareContianer = styled.div`
   margin: auto;
   margin-bottom: 30px;
   position: relative;
+  /* display: none; */
 
   @media (max-width: 910px) {
     width: 90%;
@@ -350,6 +350,11 @@ const ShareOptions = styled.div`
   @media (max-width: 910px) {
     margin-left: 0px;
   }
+  @media (max-width: 450px) {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
 `;
 const ShareOption = styled.div`
   display: flex;
@@ -381,6 +386,10 @@ const ShareOptionText = styled.span`
     margin-left: 0px;
     font-size: 12px;
   }
+
+  @media (max-width: 450px) {
+    display: none;
+  }
 `;
 const ShareButton = styled.button`
   border: none;
@@ -396,7 +405,6 @@ const ShareButton = styled.button`
 const ShareImageContainer = styled.div`
   padding: 0 20px 10px 20px;
   position: relative;
-  /* max-height: 350px; */
   object-fit: cover;
 `;
 

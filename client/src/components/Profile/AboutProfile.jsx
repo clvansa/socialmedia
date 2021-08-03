@@ -104,6 +104,10 @@ const AboutProfileContainer = styled.div`
   justify-items: center;
   margin-left: 30px;
   background-color: ${(props) => props.theme.backgroundColorSecondary};
+
+  @media (max-width: 400px){
+    width: calc(100vw - 60px);
+  }
 `;
 const AboutProfileWrapper = styled.div`
   padding: 20px;

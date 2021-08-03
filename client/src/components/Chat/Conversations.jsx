@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import styled from "styled-components";
 import { format } from "timeago.js";
 import { DeleteForever } from "@material-ui/icons";
 import { Tooltip, Button } from "@material-ui/core";
 import useOutside from "../../util/useOutside";
 import decrypt from "../../util/decrypt";
-
 
 const Conversations = ({
   conversation,
@@ -117,7 +116,7 @@ const ConversationsContainer = styled.div`
   align-items: center;
   padding: 10px;
   cursor: pointer;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   border-radius: 10px;
 
   background-color: ${(props) =>
@@ -135,8 +134,7 @@ const ConversationsImg = styled.img`
 const ConversationBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-  display: flex;
+  width: calc(100% - 100px);
   justify-content: center;
 `;
 
@@ -148,6 +146,11 @@ const ConversationName = styled.span`
 const ConversationLastMsg = styled.span`
   font-size: 14px;
   color: ${(props) => props.theme.tintColorSecondary};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const ConversationDate = styled.span`
@@ -160,7 +163,7 @@ const IconBox = styled.div`
   margin: auto;
   padding: 8px;
   border-radius: 50%;
-  display: ${(props) => (props.active ? "block" : "none")} !important;
+  visibility: ${(props) => (props.active ? "visible" : "hidden")} !important;
   transition: 0.5s background-color;
 
   &:hover {

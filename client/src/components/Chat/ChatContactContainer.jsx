@@ -30,8 +30,16 @@ const ChatContactContainer = ({ setCurrentChat, currentUserId }) => {
     return setFindFriend(e.target.value);
   };
 
+  const checkSize = () => {
+    if (size.width > 400) {
+      return "400px";
+    } else {
+      return "300px";
+    }
+  };
+
   return (
-    <Contianer style={{ position }}>
+    <Contianer style={{ position }} view={view}>
       <ChatContactWrapper>
         <TitleBox>
           <SearchFriend
@@ -41,9 +49,9 @@ const ChatContactContainer = ({ setCurrentChat, currentUserId }) => {
         </TitleBox>
 
         <CustomIconButton onClick={handleToggle}>
-          {view ? <ArrowBackCss /> : <ArrowForwardCss />}
+          {view ? <ArrowForwardCss /> : <ArrowBackCss />}
         </CustomIconButton>
-        <ChatContactContent style={{ width: view ? "400px" : "0px" }}>
+        <ChatContactContent style={{ width: view ? checkSize() : "0px" }}>
           <ChatOnlineUser
             setCurrentChat={setCurrentChat}
             currentUserId={currentUserId}
@@ -64,12 +72,6 @@ const Contianer = styled.div`
   z-index: 100;
   height: calc(100vh - 51px);
   top: 50px;
-
-  /* @media (max-width: 600px) {
-    top: 0px;
-    z-index: 10000;
-    background-color: transparent;
-  } */
 `;
 const ChatContactWrapper = styled.div`
   position: relative;
@@ -80,26 +82,17 @@ const CustomIconButton = styled(IconButton)`
   left: 0px;
   top: 0px;
   z-index: 2000;
-  /* @media (max-width: 600px) {
-    right: 10px;
-    top: 1px;
-  } */
 `;
 
 const ChatContactContent = styled.div`
   padding-top: 20px;
   transition: 0.5s;
-  /* @media (max-width: 600px) {
-    top: 0px;
-    z-index: 50000;
-    background-color: ${(props) => props.theme.backgroundColor};
-    height: 100vh;
-  } */
 `;
 
 const ArrowForwardCss = styled(ArrowForward)`
   color: ${(props) => props.theme.tintColorPrimary};
 `;
+
 const ArrowBackCss = styled(ArrowBack)`
   color: ${(props) => props.theme.tintColorPrimary};
 `;
@@ -115,7 +108,6 @@ const TitleBox = styled.div`
   justify-content: space-between;
 `;
 
-
 const SearchFriend = styled.input`
   background-color: ${(props) => props.theme.inputBackgroundColor};
   border: 1px solid ${(props) => props.theme.grayColor};
@@ -125,6 +117,10 @@ const SearchFriend = styled.input`
   height: 25px;
   width: 250px;
   margin-left: 10px;
+  @media (max-width: 500px) {
+    width: 200px;
+
+  }
 
   &:focus {
     outline: none;

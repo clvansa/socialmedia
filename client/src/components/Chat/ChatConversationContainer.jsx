@@ -15,7 +15,7 @@ const ChatConversationContainer = ({ user, setCurrentChat, currentChat }) => {
   };
 
   useEffect(() => {
-    if (size.width <= 1400) {
+    if (size.width <= 1000) {
       setView(false);
       setPosition("fixed");
     } else {
@@ -24,6 +24,13 @@ const ChatConversationContainer = ({ user, setCurrentChat, currentChat }) => {
     }
   }, [size]);
 
+  const checkSize = () => {
+    if (size.width > 400) {
+      return "400px";
+    } else {
+      return "300px";
+    }
+  };
   return (
     <Contianer style={{ position }}>
       <SidebarWrapper>
@@ -36,11 +43,11 @@ const ChatConversationContainer = ({ user, setCurrentChat, currentChat }) => {
             )
           ) : (
             <IconContianer view={view}>
-              <Menu  />
+              <Menu />
             </IconContianer>
           )}
         </CustomIconButton>
-        <SidebarContent style={{ width: view ? "300px" : 0 }}>
+        <SidebarContent style={{ width: view ? checkSize() : "0" }}>
           <ChatMessagerConversation
             user={user}
             setCurrentChat={setCurrentChat}
@@ -100,6 +107,5 @@ const ArrowBackCss = styled(ArrowBack)`
   color: ${(props) => props.theme.tintColorPrimary};
 `;
 const IconContianer = styled.div`
-  color: ${(props) =>  props.theme.tintColorPrimary};
+  color: ${(props) => props.theme.tintColorPrimary};
 `;
-

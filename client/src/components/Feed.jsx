@@ -128,5 +128,6 @@ const FeedWrapper = styled.div`
   }
   @media (max-width: 600px) {
     padding: 10px 0px;
+    min-width:100%
   }
 `;

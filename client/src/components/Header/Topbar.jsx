@@ -227,6 +227,11 @@ const TopbarContainer = styled.div`
 `;
 const TopbarLeft = styled.div`
   flex: 3;
+  
+  @media (max-width: 500px) {
+   flex: 12;
+  }
+
 `;
 const TopbarLogo = styled.span`
   font-size: 24px;
@@ -247,6 +252,11 @@ const TopbarLogo = styled.span`
     /* display: none; */
     margin-left: 35px;
   }
+
+  @media (max-width: 320px) {
+    font-size: 10px;
+  }
+
 `;
 const SearchBar = styled.div`
   width: 90%;
@@ -255,6 +265,10 @@ const SearchBar = styled.div`
   border-radius: 30px;
   display: flex;
   align-items: center;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 const SearchIcon = styled(Search)`
   font-size: 20px !important;

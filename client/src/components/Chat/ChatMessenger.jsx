@@ -320,8 +320,10 @@ export default ChatMessenger;
 
 const ChatBox = styled.div`
   flex: 5;
-  width: ${(props) => (props.smallChat ? "100%" : "calc(100% - 50px)")};
+  /* width: ${(props) => (props.smallChat ? "100%" : "calc(100% )")}; */
   height: 100%;
+  padding: ${(props) => (props.smallChat ? "0" : "0 30px 0 40px")};
+  box-sizing: border-box;
 `;
 
 const ChatBoxTop = styled.div`
@@ -330,7 +332,6 @@ const ChatBoxTop = styled.div`
   padding-right: 10px;
   display: flex;
   flex-direction: column-reverse;
-
   ::-webkit-scrollbar {
     width: 5px;
   }
