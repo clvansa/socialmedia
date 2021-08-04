@@ -180,12 +180,22 @@ const Post = ({ post, update }) => {
               autoPlay={playing}
               ref={videoRef}
               playsInline
+              style={{ maxHeight: "500px", objectFit: "contain" }}
               // playsinline={true}
               // pip={true}
             >
               <source src={post.video} />
             </video>
           )}
+          <div
+          style={{margin: "auto",display:"flex",justifyContent: "center"}}
+            dangerouslySetInnerHTML={{
+              __html: `<video className="app__backgroundVideo" autoplay loop muted playsinline controls={true} width={"100%"} style={{width: "800px",flex:1}}>
+                 <source src=${post.video} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>`,
+            }}
+          />
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
@@ -293,6 +303,7 @@ const PostText = styled.span`
 const PostImage = styled.img`
   margin-top: 20px;
   width: 100%;
+  height: 100%;
   max-height: 500px;
   object-fit: contain;
 `;
