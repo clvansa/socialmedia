@@ -24,7 +24,7 @@ const Post = ({ post, update }) => {
   const [playing, setPlaying] = useState(false);
   const [bookmark, setBookmark] = useState(false);
   const [showComments, setShowComments] = useState(false);
-
+  const videoRef = useRef();
   useEffect(() => {
     let mounted = true;
     const fetchUser = async () => {
@@ -81,6 +81,13 @@ const Post = ({ post, update }) => {
     }
   };
 
+  const onMouseOver = () => {
+    videoRef.current.play();
+  };
+
+  const onMouseLeave = () => {
+    videoRef.current.pause();
+  };
   return (
     <PostConatiner>
       <PostWrapper>
@@ -161,19 +168,23 @@ const Post = ({ post, update }) => {
           </ShowMoreTextCss>
           <PostImage src={post.img} alt="" />
           {post?.video && (
-            <ReactPlayer
-              url={post.video}
+            <video
+              // url={post.video}
               controls={true}
               width={"100%"}
-              onMouseOver={() => setPlaying(true)}
-              onMouseLeave={(e) => setPlaying(false)}
-              playing={playing}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
+              // playing={playing}
               volume={0.5}
               muted={true}
+              autoPlay={playing}
+              ref={videoRef}
               playsInline
-              playsinline={true}
-              pip={true}
-            />
+              // playsinline={true}
+              // pip={true}
+            >
+              <source src={post.video} />
+            </video>
           )}
         </PostCenter>
         <PostBottom>
