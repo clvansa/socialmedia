@@ -10,12 +10,12 @@ const getMedia = () => new Promise((resolve) => {
 });
 
 const Example = () => {
-  const [url, setUrl] = useState('http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4');
+  const [url, setUrl] = useState(null);
   return (
     <section>
-      {/* <div onClick={() => getMedia().then(setUrl)}>
+      <div onClick={() => getMedia().then(setUrl)}>
         Play Video
-      </div> */}
+      </div>
       <ReactPlayer
         url={url}
         playsinline
