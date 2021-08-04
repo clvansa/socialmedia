@@ -190,7 +190,7 @@ const Post = ({ post, update }) => {
           <div
           style={{margin: "auto",display:"flex",justifyContent: "center"}}
             dangerouslySetInnerHTML={{
-              __html: `<video className="app__backgroundVideo" autoplay loop muted playsinline controls={true} width={"100%"} style={{width: "800px",flex:1}}>
+              __html: `<video className="app__backgroundVideo" autoplay loop muted playsInline controls={true} width={"100%"} style={{width: "800px",flex:1}}>
                  <source src=${post.video} type="video/mp4" />
               Your browser does not support the video tag.
             </video>`,
