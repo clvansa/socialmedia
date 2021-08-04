@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import { CircularProgress, Paper, Container } from "@material-ui/core";
 import PostSkeleton from "./Skeletons/PostSkeleton";
 import {axiosInstance} from "../util/axiosInstance"
+import Example from "./Example";
 
 const Feed = ({ username, video, bookmark }) => {
   const [posts, setPosts] = useState([]);
@@ -73,6 +74,7 @@ const Feed = ({ username, video, bookmark }) => {
     if (posts.length === index + 1) {
       return (
         <div key={post._id} ref={lastItem}>
+          <Example />
           <Post post={post} />
           <div style={{ display: "flex", justifyContent: "center" }}>
             {isLoading && <CircularProgress />}
