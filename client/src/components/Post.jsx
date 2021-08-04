@@ -13,7 +13,6 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import Comments from "./Comment/Comments";
 import { SocketContext } from "../context/SocketContext";
 import decrypt from "../util/decrypt";
-import { Player } from "video-react";
 
 
 const Post = ({ post, update }) => {
@@ -186,18 +185,11 @@ const Post = ({ post, update }) => {
               // playsinline={true}
               // pip={true}
             >
-              <source src={post.video} />
+              <source url={post.video} />
             </video>
           )}
 
-          {post.video && (
-            <Player
-              playsInline
-              poster="/assets/poster.png"
-              src={post.video}
-              controls={false}
-            />
-          )}
+    
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>

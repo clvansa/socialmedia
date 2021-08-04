@@ -35,7 +35,6 @@
     "timeago.js": "^4.0.2",
     "use-immer": "^0.6.0",
     "uuid": "^8.3.2",
-    "video-react": "^0.14.1",
     "web-vitals": "^1.1.2",
     "yup": "^0.32.9"
   },
