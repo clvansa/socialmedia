@@ -6,7 +6,6 @@ import { AuthContext } from "../context/AuthContext";
 import { CircularProgress, Paper, Container } from "@material-ui/core";
 import PostSkeleton from "./Skeletons/PostSkeleton";
 import {axiosInstance} from "../util/axiosInstance"
-import Example from "./Example";
 
 const Feed = ({ username, video, bookmark }) => {
   const [posts, setPosts] = useState([]);

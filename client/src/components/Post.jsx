@@ -187,13 +187,6 @@ const Post = ({ post, update }) => {
               <source src={post.video} />
             </video>
           )}
-
-          <ReactPlayer
-            url={post.video}
-            controls={true}
-            width={"100%"}
-            playsinline={true}
-          />
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
