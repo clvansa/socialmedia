@@ -170,7 +170,7 @@ const Post = ({ post, update }) => {
           <PostImage src={post.img} alt="" />
           {post?.video && (
             <video
-              // url={post.video}
+              url={post.video}
               controls={true}
               width={"100%"}
               onMouseOver={onMouseOver}
@@ -185,7 +185,7 @@ const Post = ({ post, update }) => {
               // playsinline={true}
               // pip={true}
             >
-              <source url={post.video} />
+              <source src={post.video} />
             </video>
           )}
 
