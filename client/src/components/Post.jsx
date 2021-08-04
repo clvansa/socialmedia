@@ -192,6 +192,7 @@ const Post = ({ post, update }) => {
             url={post.video}
             controls={true}
             width={"100%"}
+            playsinline={true}
           />
         </PostCenter>
         <PostBottom>
