@@ -170,7 +170,9 @@ const Post = ({ post, update }) => {
               playing={playing}
               volume={0.5}
               muted={true}
-              playsinline
+              playsInline
+              playsinline={true}
+              pip={true}
             />
           )}
         </PostCenter>
