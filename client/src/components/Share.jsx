@@ -61,20 +61,17 @@ const Share = (props) => {
       const data = new FormData();
       const extension = file.name.split(".")[file.name.split(".").length - 1];
       const name = uuid().toString().replace(/-/g, "");
-      const fileBlob = new Blob([file], { type: file.type }); // WORKS much better (if you know what MIME type you want.
+      // const fileBlob = new Blob([file], { type: file.type }); // WORKS much better (if you know what MIME type you want.
 
-      console.log(fileBlob);
+      // console.log(fileBlob);
       const fileName = `${name}.${extension}`;
 
       data.append("name", fileName);
-      data.append("file", fileBlob);
-      console.log(fileName);
+      data.append("file", file);
+      console.log(file);
 
       const config = {
         headers: {
-          "Access-Control-Allow-Headers": "access-control-allow-origin",
-          "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
@@ -82,7 +79,7 @@ const Share = (props) => {
       try {
         const res = await axiosInstance.post(`/uploads/`, data, config);
         const { imageUrl } = await res.data;
-        if (file.type === "video/mp4") {
+        if (file.type === "video/mp4" || file.type === "video/quicktime") {
           newPost.video = imageUrl;
         } else {
           newPost.img = imageUrl;
@@ -242,7 +239,7 @@ const Share = (props) => {
                   <input
                     type="file"
                     id="file"
-                    accept=".png,.jpeg,.jpg,.mp4"
+                    accept=".png,.jpeg,.jpg,.mp4,.MOV"
                     onChange={(e) => {
                       setFile(e.target.files[0]);
                     }}
