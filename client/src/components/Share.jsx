@@ -61,15 +61,24 @@ const Share = (props) => {
       const data = new FormData();
       const extension = file.name.split(".")[file.name.split(".").length - 1];
       const name = uuid().toString().replace(/-/g, "");
+      const fileBlob = new Blob([file], { type: file.type }); // WORKS much better (if you know what MIME type you want.
+
+      console.log(fileBlob);
       const fileName = `${name}.${extension}`;
 
       data.append("name", fileName);
-      data.append("file", file);
+      data.append("file", fileBlob);
+      console.log(fileName);
 
       const config = {
-        headers: { "content-type": "multipart/form-data" },
+        headers: {
+          "Access-Control-Allow-Headers": "access-control-allow-origin",
+          "Access-Control-Allow-Methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       };
-      
+
       try {
         const res = await axiosInstance.post(`/uploads/`, data, config);
         const { imageUrl } = await res.data;
@@ -89,7 +98,7 @@ const Share = (props) => {
       console.log(err);
     }
 
-    props.update();
+    // props.update();
     desc.current.value = "";
     setFile(null);
   };

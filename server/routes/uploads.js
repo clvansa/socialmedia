@@ -7,6 +7,7 @@ const admin = require('firebase-admin');
 const uuid = require('uuid-v4')
 require('dotenv').config()
 
+const cors = require('cors');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -27,7 +28,7 @@ const upload = multer({ storage })
 
 const bucket = admin.storage().bucket();
 
-router.post('/', upload.single('file'), async (req, res, next) => {
+router.post('/', cors(), upload.single('file'), async (req, res, next) => {
     const { filename, path, mimetype } = req.file;
     console.log({ filename, path, mimetype })
     const generatedToken = uuid();
