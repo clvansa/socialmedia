@@ -73,7 +73,6 @@ const Feed = ({ username, video, bookmark }) => {
     if (posts.length === index + 1) {
       return (
         <div key={post._id} ref={lastItem}>
-          <Example />
           <Post post={post} />
           <div style={{ display: "flex", justifyContent: "center" }}>
             {isLoading && <CircularProgress />}
