@@ -13,6 +13,8 @@ import { IconButton, Tooltip } from "@material-ui/core";
 import Comments from "./Comment/Comments";
 import { SocketContext } from "../context/SocketContext";
 import decrypt from "../util/decrypt";
+import { Player } from "video-react";
+
 
 const Post = ({ post, update }) => {
   const [like, setLike] = useState(post.likes.length);
@@ -187,15 +189,15 @@ const Post = ({ post, update }) => {
               <source src={post.video} />
             </video>
           )}
-          <div
-          style={{margin: "auto",display:"flex",justifyContent: "center"}}
-            dangerouslySetInnerHTML={{
-              __html: `<video className="app__backgroundVideo" autoplay loop muted playsInline controls={true} width={"100%"} style={{width: "800px",flex:1}}>
-                 <source src=${post.video} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>`,
-            }}
-          />
+
+          {post.video && (
+            <Player
+              playsInline
+              poster="/assets/poster.png"
+              src={post.video}
+              controls={false}
+            />
+          )}
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
