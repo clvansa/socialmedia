@@ -14,7 +14,6 @@ import Comments from "./Comment/Comments";
 import { SocketContext } from "../context/SocketContext";
 import decrypt from "../util/decrypt";
 
-
 const Post = ({ post, update }) => {
   const [like, setLike] = useState(post.likes.length);
   const [user, setUser] = useState([]);
@@ -189,7 +188,11 @@ const Post = ({ post, update }) => {
             </video>
           )}
 
-    
+          <ReactPlayer
+            url={post.video}
+            controls={true}
+            width={"100%"}
+          />
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
