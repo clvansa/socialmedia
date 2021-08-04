@@ -102,11 +102,7 @@ const PostPage = (props) => {
                                 <PostTopLeft>
                                     <Link to={`/profile/${user.username}`}>
                                         <PostProfileImage
-                                            src={
-                                                user?.profilePicture
-                                                    ? PF + user?.profilePicture
-                                                    : PF + "person/noAvatar.png"
-                                            }
+                                            src={user?.profilePicture}
                                         />
                                     </Link>
                                     <PostInfo>

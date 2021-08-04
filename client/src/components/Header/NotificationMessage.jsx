@@ -33,11 +33,7 @@ const NotificationMessage = ({ notification }) => {
       <NotificationMessageWrapper>
         <NotificationMessageTop>
           <NotificationMessageImage
-            src={
-              notification?.sender?.profilePicture
-                ? `${PF}${notification?.sender?.profilePicture}`
-                : `${PF}person/noAvatar.png`
-            }
+            src={notification?.sender?.profilePicture}
           />
           <NotificationMessageName>
             {notification?.sender?.username}{" "}

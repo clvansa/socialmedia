@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {axiosInstance} from "../util/axiosInstance";
+import { axiosInstance } from "../util/axiosInstance";
 
 const TagMenu = ({ user, setTagValue }) => {
   const [following, setFollowing] = useState([]);
@@ -24,13 +24,7 @@ const TagMenu = ({ user, setTagValue }) => {
       <TagMenuWrapper>
         {following.map((follow) => (
           <FollowingInfo key={follow._id} onClick={() => setTagValue(follow)}>
-            <FollowingImg
-              src={
-                follow.profilePicture
-                  ? `${PF}${follow.profilePicture}`
-                  : `${PF}person/noAvatar.png`
-              }
-            />
+            <FollowingImg src={follow.profilePicture} />
 
             <FollowingName>{follow.username}</FollowingName>
           </FollowingInfo>

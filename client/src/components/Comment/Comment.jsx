@@ -84,13 +84,7 @@ const Comment = ({ comment, userId, delComment, upComment }) => {
       <CommentWrapper>
         <CommentTop>
           <CommentLeft>
-            <Avatar
-              src={
-                comment.userId.profilePicture
-                  ? PF + comment.userId?.profilePicture
-                  : `${PF}person/noAvatar.png`
-              }
-            />
+            <Avatar src={comment.userId.profilePicture} />
           </CommentLeft>
           <CommentRight>
             <CommentBox>

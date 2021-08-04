@@ -131,13 +131,7 @@ const Topbar = () => {
                   }
                 >
                   <SearchListItem>
-                    <SearchListItemImg
-                      src={
-                        u?.profilePicture
-                          ? PF + u?.profilePicture
-                          : PF + "person/noAvatar.png"
-                      }
-                    />
+                    <SearchListItemImg src={u?.profilePicture} />
                     <SearchListItemContainer>
                       <SearchListItemName>{u?.username}</SearchListItemName>
                       <SearchListItemType>
@@ -227,11 +221,10 @@ const TopbarContainer = styled.div`
 `;
 const TopbarLeft = styled.div`
   flex: 3;
-  
-  @media (max-width: 500px) {
-   flex: 12;
-  }
 
+  @media (max-width: 500px) {
+    flex: 12;
+  }
 `;
 const TopbarLogo = styled.span`
   font-size: 24px;
@@ -256,7 +249,6 @@ const TopbarLogo = styled.span`
   @media (max-width: 320px) {
     font-size: 10px;
   }
-
 `;
 const SearchBar = styled.div`
   width: 90%;

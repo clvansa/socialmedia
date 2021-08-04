@@ -12,7 +12,9 @@ router.post('/register', async (req, res, next) => {
         const newUser = await new User({
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            profilePicture: "https://firebasestorage.googleapis.com/v0/b/socialmedia-storge.appspot.com/o/noAvatar.png?alt=media&token=313acc67-ebf3-4bc7-8cb4-d240d4a7510c",
+            coverPicture:"https://firebasestorage.googleapis.com/v0/b/socialmedia-storge.appspot.com/o/89cdf980cf7847d29ecc99cfca1e9384.jpg?alt=media&token=06eb4d5e-4a40-4333-91f5-5c03289c9dfd"
         })
 
         const user = await newUser.save();

@@ -63,11 +63,7 @@ const FriendsProfile = ({ user }) => {
                 >
                   <RightbarFollowingContianer>
                     <RightbarFollowingImage
-                      src={
-                        friend?.profilePicture
-                          ? PF + friend.profilePicture
-                          : `${PF}person/noAvatar.png`
-                      }
+                      src={friend?.profilePicture}
                       alt="follower"
                     />
                     <RightbarFollowingName>
@@ -98,11 +94,7 @@ const FriendsProfile = ({ user }) => {
                 >
                   <RightbarFollowingContianer>
                     <RightbarFollowingImage
-                      src={
-                        follower?.profilePicture
-                          ? PF + follower.profilePicture
-                          : `${PF}person/noAvatar.png`
-                      }
+                      src={follower?.profilePicture}
                       alt="follower"
                     />
                     <RightbarFollowingName>

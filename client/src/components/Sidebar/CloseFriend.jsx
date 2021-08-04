@@ -5,13 +5,7 @@ const CloseFriend = ({ user }) => {
 
   return (
     <SidebarFriend>
-      <SidebarFriendImage
-        src={
-          user?.profilePicture
-            ? `${PF}${user?.profilePicture}`
-            : `${PF}person/noAvatar.png`
-        }
-      />
+      <SidebarFriendImage src={user?.profilePicture} />
       <SidebarFriendName>{user?.username}</SidebarFriendName>
     </SidebarFriend>
   );

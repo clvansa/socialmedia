@@ -45,6 +45,6 @@ const Container = styled.div`
         flex-wrap: nowrap;
     }
     @media (max-width : 600px){
-            width: 100vw;
+            width: 95vw;
         }
 `

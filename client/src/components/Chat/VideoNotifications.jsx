@@ -3,10 +3,9 @@ import styled from "styled-components";
 import { SocketContext } from "../../context/SocketContext";
 import { Button, Avatar } from "@material-ui/core/";
 import { Call, CallEnd } from "@material-ui/icons";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
 import Ring from "../../audioList/Tone-ringback.mp3";
 import decrypt from "../../util/decrypt";
-
 
 const VideoNotifications = () => {
   const { answerCall, call, callAccepted, leaveCall, videoUsersId } =
@@ -21,7 +20,9 @@ const VideoNotifications = () => {
     if (!findUser) return;
     const getUser = async () => {
       try {
-        const res = await axiosInstance.get(`/users/user?userId=${findUser.userId}`);
+        const res = await axiosInstance.get(
+          `/users/user?userId=${findUser.userId}`
+        );
         const decrypted = await decrypt(res.data).then((data) => data);
 
         setCaller(decrypted);
@@ -31,20 +32,14 @@ const VideoNotifications = () => {
     };
 
     getUser();
-    RingRef.current.play()
+    RingRef.current.play();
   }, [call]);
 
   return call.isReceivingCall && !callAccepted ? (
     <NotificationCallContainer>
       <NotificationCallWrapper>
         <CallInfo>
-          <Avatar
-            src={
-              caller.profilePicture
-                ? `${PF}${caller.profilePicture}`
-                : `${PF}person/noAvatar.png`
-            }
-          />
+          <Avatar src={caller.profilePicture} />
           <CallName>{caller.username} is calling you...</CallName>
         </CallInfo>
         <CallButtonOptions>
@@ -61,7 +56,7 @@ const VideoNotifications = () => {
           </ButtonOption>
         </CallButtonOptions>
       </NotificationCallWrapper>
-      <audio src={Ring} ref={RingRef} hidden/>
+      <audio src={Ring} ref={RingRef} hidden />
     </NotificationCallContainer>
   ) : null;
 };

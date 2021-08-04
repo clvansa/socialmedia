@@ -16,7 +16,7 @@ const ContactContianer = () => {
   return (
     <Contianer ref={CloseRef}>
       <RightbarWrapper>
-        <RightbarContent style={{ height: view ? "80vh" : 0 }}>
+        <RightbarContent style={{ height: view ? "70vh" : 0 }}>
           <TitleBox>
             <TitleMenu onClick={handleToggle}>Contact</TitleMenu>
           </TitleBox>

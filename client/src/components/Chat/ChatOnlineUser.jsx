@@ -61,12 +61,11 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
   useEffect(() => {
     let mounted = true;
     if (mounted) {
- 
       const searchResult = friends.filter((friend) => {
         if (friend.username.toLowerCase().includes(filterFriend)) {
-          return  friend
-        };
-        return 
+          return friend;
+        }
+        return;
       });
 
       searchResult && setFriends(searchResult);
@@ -83,14 +82,7 @@ const ChatOnlineUser = ({ currentUserId, setCurrentChat, filterFriend }) => {
           onClick={() => handleOpenNewConversation(friend?._id)}
         >
           <ChatOnlineImgContainer>
-            <ChatOnlineImg
-              src={
-                friend?.profilePicture
-                  ? `${PF}${friend.profilePicture}`
-                  : `${PF}person/noAvatar.png`
-              }
-              alt="picture"
-            />
+            <ChatOnlineImg src={friend?.profilePicture} alt="picture" />
             {onlineUsers?.includes(friend._id) && <ChatOnlineBudge />}
           </ChatOnlineImgContainer>
           <ChatOnlineName>{friend?.username}</ChatOnlineName>

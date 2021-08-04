@@ -19,6 +19,7 @@ const converstationRoute = require('./routes/conversation');
 const messageRoute = require('./routes/message');
 const commentRoute = require('./routes/comment');
 const uploadRoute = require('./routes/upload');
+const uploadFirebase = require('./routes/uploads')
 
 
 dotenv.config();
@@ -39,24 +40,7 @@ app.use(bodyParser.json())
 
 app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
-//Multer
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, "public/images")
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, req.body.name)
-//     }
-// })
 
-// const upload = multer({ storage });
-// app.post('/api/upload', upload.single('file'), async (req, res) => {
-//     try {
-//         return res.status(200).json('File uploaded successfully')
-//     } catch (err) {
-//         console.log(err)
-//     }
-// })
 
 app.use('/api/users', userRoute);
 app.use('/api/auth', authRoute);
@@ -65,6 +49,7 @@ app.use('/api/conversation', converstationRoute);
 app.use('/api/message', messageRoute);
 app.use('/api/comments', commentRoute);
 app.use('/api/upload', uploadRoute);
+app.use('/api/uploads', uploadFirebase);
 
 app.get('/', (req, res) => {
     res.send('Welcome to homepage')

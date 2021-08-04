@@ -39,7 +39,7 @@ const Contact = () => {
 
   const handleSearch = (e) => {
     const friend = friendsOnline.filter((friend) => {
-      if (friend.username.toLowerCase().includes(e.target.value)) {
+      if (friend.username.toLowerCase().includes(e.target.value.toLowerCase())) {
         return friend;
       }
       return;

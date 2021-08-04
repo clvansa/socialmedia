@@ -27,7 +27,7 @@ const ChatContactContainer = ({ setCurrentChat, currentUserId }) => {
   console.log(view);
 
   const handleChange = (e) => {
-    return setFindFriend(e.target.value);
+    return setFindFriend(e.target.value.toLowerCase());
   };
 
   const checkSize = () => {

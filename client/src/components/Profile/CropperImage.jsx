@@ -4,7 +4,8 @@ import { Button } from "@material-ui/core";
 import Cropper from "cropperjs";
 import "cropperjs/dist/cropper.css";
 import urlToFile from "../../util/urlToFile";
-import {axiosInstance} from "../../util/axiosInstance";
+import { axiosInstance } from "../../util/axiosInstance";
+import { v4 as uuid } from "uuid";
 
 const CropperImage = ({ file, type, setFile }) => {
   const [imageDestination, setImageDestination] = useState("");
@@ -42,8 +43,14 @@ const CropperImage = ({ file, type, setFile }) => {
   const randomNumber = () => Math.floor(Math.random() * 99999999);
 
   const handleSubmit = async () => {
+    let image;
+
     const data = new FormData();
-    const fileName = Date.now() + randomNumber() + ".jpg";
+    // const fileName = Date.now() + randomNumber() + ".jpg";
+    const extension = file.name.split(".")[file.name.split(".").length - 1];
+    const name = uuid().toString().replace(/-/g, "");
+    const fileName = `${name}.${extension}`;
+
     try {
       const converetFile = await urlToFile(
         imageDestination,
@@ -54,24 +61,22 @@ const CropperImage = ({ file, type, setFile }) => {
       data.append("name", fileName);
       data.append("file", converetFile);
 
-      const res = await axiosInstance.post("/upload/person", data);
+      const res = await axiosInstance.post("/uploads", data);
+      if (type === "cover") {
+        image = {
+          coverPicture: `${res.data.imageUrl}`,
+        };
+      } else {
+        image = {
+          profilePicture: `${res.data.imageUrl}`,
+        };
+      }
     } catch (err) {
       console.log(err);
     }
 
     try {
-      let data;
-      if (type === "cover") {
-        data = {
-          coverPicture: `person/${fileName}`,
-        };
-      } else {
-        data = {
-          profilePicture: `person/${fileName}`,
-        };
-      }
-
-      const res = await axiosInstance.put(`/users/`, data);
+      const res = await axiosInstance.put(`/users/`, image);
     } catch (err) {
       console.log(err);
     }

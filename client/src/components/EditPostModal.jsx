@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import useGeoLocation from "../util/useGeoLocation";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
+import { v4 as uuid } from "uuid";
 
 import {
   PermMedia,
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 const EditPostModal = ({ currentPost, openModal, setOpenModal }, props) => {
   const classes = useStyles();
   const [modalStyle] = useState(getModalStyle);
-  const [post, setPost] = useState(null);
   const { user } = useContext(AuthContext);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const location = useGeoLocation();
@@ -73,22 +73,26 @@ const EditPostModal = ({ currentPost, openModal, setOpenModal }, props) => {
       lastEdit: Date.now(),
     };
 
-    if (!file) updatePost.img = "";
-
     if (newFile) {
       const data = new FormData();
-      const fileName = Date.now() + newFile.name;
+      const extension =
+        newFile.name.split(".")[newFile.name.split(".").length - 1];
+      const name = uuid().toString().replace(/-/g, "");
+      const fileName = `${name}.${extension}`;
+
       data.append("name", fileName);
       data.append("file", newFile);
 
-      if (newFile.type === "video/mp4") {
-        updatePost.video = fileName;
-      } else {
-        updatePost.img = fileName;
-      }
-
       try {
-        await axiosInstance.post("/upload/post", data);
+        const res = await axiosInstance.post(`/uploads/`, data);
+        const { imageUrl } = await res.data;
+        console.log(imageUrl);
+        if (!file) updatePost.img = "";
+        if (newFile.type === "video/mp4") {
+          updatePost.video = imageUrl;
+        } else {
+          updatePost.img = imageUrl;
+        }
       } catch (err) {
         console.log(err);
       }
@@ -115,14 +119,7 @@ const EditPostModal = ({ currentPost, openModal, setOpenModal }, props) => {
       <ShareContianer>
         <ShareWrapper>
           <ShareTop>
-            <ShareProfileImage
-              src={
-                user?.profilePicture
-                  ? PF + user.profilePicture
-                  : PF + "person/noAvatar.png"
-              }
-              alt="Profie Image"
-            />
+            <ShareProfileImage src={user?.profilePicture} alt="Profie Image" />
             <ShareInput
               placeholder={`What's in your mind ${user.username}...? ${currentCity}`}
               onChange={(e) => setInput(e.target.value)}
@@ -134,16 +131,13 @@ const EditPostModal = ({ currentPost, openModal, setOpenModal }, props) => {
             <div>
               {currentPost?.img ? (
                 <ShareImageContainer>
-                  <ShareImg
-                    src={file && `${PF}post/${currentPost.img}`}
-                    alt=""
-                  />
+                  <ShareImg src={file && `${currentPost.img}`} alt="" />
                   <CancelIcon onClick={() => setFile(null)} />
                 </ShareImageContainer>
               ) : (
                 <ShareImageContainer>
                   <ReactPlayer
-                    url={file && `${PF}post/${currentPost.video}`}
+                    url={file && `${currentPost.video}`}
                     controls={true}
                     width={"100%"}
                   />

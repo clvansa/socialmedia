@@ -26,6 +26,7 @@ export const LoginUser = async (userCrendentail, dispatch, history) => {
             type: LOGIN_FAILURE,
             payload: err.response.data
         })
+
     }
 
 }
@@ -53,6 +54,8 @@ export const GetOwnUser = async (dispatch) => {
         })
     } catch (err) {
         console.log(err)
+        await localStorage.removeItem('token')
+        window.location.href = '/login'
     }
 }
 
@@ -67,6 +70,7 @@ export const GetUser = async (userId, dispatch) => {
         })
     } catch (err) {
         console.log(err)
+
     }
 }
 

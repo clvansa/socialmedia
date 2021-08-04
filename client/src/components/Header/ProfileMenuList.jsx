@@ -64,14 +64,7 @@ const ProfileMenuList = () => {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <TopbarImage
-          src={
-            user?.profilePicture
-              ? PF + user.profilePicture
-              : PF + "person/noAvatar.png"
-          }
-          alt="profile image"
-        />
+        <TopbarImage src={user?.profilePicture} alt="profile image" />
       </IconButton>
       <Popper
         open={open}

@@ -3,6 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import useGeoLocation from "../util/useGeoLocation";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
+import { v4 as uuid } from "uuid";
 import {
   PermMedia,
   Label,
@@ -58,25 +59,32 @@ const Share = (props) => {
 
     if (file) {
       const data = new FormData();
-      const fileName = Date.now() + file.name;
+      const extension = file.name.split(".")[file.name.split(".").length - 1];
+      const name = uuid().toString().replace(/-/g, "");
+      const fileName = `${name}.${extension}`;
+
       data.append("name", fileName);
       data.append("file", file);
-      if (file.type === "video/mp4") {
-        newPost.video = fileName;
-      } else {
-        newPost.img = fileName;
-      }
+
       try {
-        await axiosInstance.post("/upload/post", data);
+        const res = await axiosInstance.post(`/uploads/`, data);
+        const { imageUrl } = await res.data;
+        if (file.type === "video/mp4") {
+          newPost.video = imageUrl;
+        } else {
+          newPost.img = imageUrl;
+        }
       } catch (err) {
         console.log(err);
       }
     }
+
     try {
       await axiosInstance.post("/posts", newPost);
     } catch (err) {
       console.log(err);
     }
+
     props.update();
     desc.current.value = "";
     setFile(null);
@@ -171,14 +179,7 @@ const Share = (props) => {
     <ShareContianer>
       <ShareWrapper>
         <ShareTop>
-          <ShareProfileImage
-            src={
-              user?.profilePicture
-                ? PF + user.profilePicture
-                : PF + "person/noAvatar.png"
-            }
-            alt="Profie Image"
-          />
+          <ShareProfileImage src={user?.profilePicture} alt="Profie Image" />
           <ShareInput
             placeholder={`What's in your mind ${user?.username}...? ${currentCity}`}
             ref={desc}

@@ -9,11 +9,7 @@ const Online = ({ user }) => {
     <RightbarFriend>
       <RightbarProfileImageContainer>
         <RightbarProfileImage
-          src={
-            user?.profilePicture
-              ? PF + user.profilePicture
-              : PF + "person/noAvatar.png"
-          }
+          src={user?.profilePicture}
           alt="profile Picture"
         />
         {onlineUsers?.includes(user._id) && <RightbarOnline />}

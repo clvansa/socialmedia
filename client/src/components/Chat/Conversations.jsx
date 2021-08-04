@@ -54,14 +54,7 @@ const Conversations = ({
         key={conversation?._id}
         active={conversation._id === active}
       >
-        <ConversationsImg
-          src={
-            user?.profilePicture
-              ? `${PF}${user?.profilePicture}`
-              : `${PF}person/noAvatar.png`
-          }
-          alt=""
-        />
+        <ConversationsImg src={user?.profilePicture} alt="" />
         <ConversationBox>
           <ConversationName>{user?.username} </ConversationName>
           <ConversationLastMsg>{conversation?.lastMsg} </ConversationLastMsg>

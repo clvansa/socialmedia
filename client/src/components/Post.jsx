@@ -87,13 +87,7 @@ const Post = ({ post, update }) => {
         <PostTop>
           <PostTopLeft>
             <Link to={`/profile/${user.username}`}>
-              <PostProfileImage
-                src={
-                  user?.profilePicture
-                    ? PF + user?.profilePicture
-                    : PF + "person/noAvatar.png"
-                }
-              />
+              <PostProfileImage src={user?.profilePicture} />
             </Link>
             <PostInfo>
               <div>
@@ -165,10 +159,10 @@ const Post = ({ post, update }) => {
           >
             <PostText>{post?.desc}</PostText>
           </ShowMoreTextCss>
-          <PostImage src={post.img && PF + "post/" + post.img} alt="" />
+          <PostImage src={post.img} alt="" />
           {post?.video && (
             <ReactPlayer
-              url={post.video && PF + "post/" + post.video}
+              url={post.video}
               controls={true}
               width={"100%"}
               onMouseOver={() => setPlaying(true)}

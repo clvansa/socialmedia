@@ -99,8 +99,6 @@ const PostPage = () => {
                                         <PostProfileImage
                                             src={
                                                 user?.profilePicture
-                                                    ? PF + user?.profilePicture
-                                                    : PF + "person/noAvatar.png"
                                             }
                                         />
                                     </Link>

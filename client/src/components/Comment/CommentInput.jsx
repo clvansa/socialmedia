@@ -25,14 +25,14 @@ const CommentInput = ({ user, postId, setComments, hasComment }) => {
         setComments((prevState) => [res.data, ...prevState]);
         setComment("");
         const post = await axiosInstance.get(`/posts/${postId}`);
-        console.log(post)
+        console.log(post);
         const data = {
           receiverId: post.data.userId,
           notifyType: "comment",
           createdAt: Date.now(),
         };
 
-        console.log(data)
+        console.log(data);
 
         sendNotificationToSocket(data);
       } catch (err) {
@@ -45,13 +45,7 @@ const CommentInput = ({ user, postId, setComments, hasComment }) => {
     <CommentInputContainer hasComment={hasComment}>
       <CommentInputWarpper>
         <CommentInputBox>
-          <CommentImg
-            src={
-              user.profilePicture
-                ? `${PF}${user.profilePicture}`
-                : `${PF}person/noAvatar.png`
-            }
-          />
+          <CommentImg src={user.profilePicture} />
           <InputContainer>
             <InputComment
               placeholder="Write a comment..."

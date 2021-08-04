@@ -12,7 +12,7 @@ const Message = ({ message, own, currentFriend, currentUser, smallChat }) => {
     <MessageContainer own={own}>
       <MessageTop>
         <MessageImg
-          src={photo ? `${PF}${photo}` : `${PF}person/noAvatar.png`}
+          src={photo}
           alt=""
           own={own}
         />

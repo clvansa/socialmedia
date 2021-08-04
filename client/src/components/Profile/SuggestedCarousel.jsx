@@ -49,13 +49,7 @@ const SuggestedCarousel = ({ suggestedFriends }) => {
               (window.location.href = `/profile/${friend.username}`)
             }
           >
-            <CardImg
-              src={
-                friend.profilePicture
-                  ? `${PF}${friend.profilePicture}`
-                  : `${PF}person/noAvatar.png`
-              }
-            />
+            <CardImg src={friend.profilePicture} />
             <CardName>{friend.username}</CardName>
           </Card>
         ))
@@ -67,7 +61,6 @@ const SuggestedCarousel = ({ suggestedFriends }) => {
 };
 
 export default SuggestedCarousel;
-
 
 const Card = styled.div`
   display: flex;

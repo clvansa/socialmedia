@@ -39,13 +39,10 @@ const Profile = () => {
                 <ProfileRight>
                     <ProfileRightTop>
                         <ProfileCover>
-                            <ProfileCoverImage src={user?.coverPicture
-                                ? PF + user?.coverPicture
-                                : PF + "person/noCover.png"} />
+                            <ProfileCoverImage src={user?.coverPicture} />
                             <EditIcon style={{ position: "absolute", bottom: "80px", right: 0 }} />
                             <ProfileUserImage src={user?.profilePicture
-                                ? PF + user?.profilePicture
-                                : PF + "person/noAvatar.png"} />
+                            } />
                         </ProfileCover>
                         <ProfileInfo>
                             <ProfileInfoName>{user.username}</ProfileInfoName>

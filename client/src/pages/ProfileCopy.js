@@ -69,13 +69,9 @@ const Profile = () => {
                     <ProfileTop>
                         <div style={{ maxWidth: "1200px", margin: "auto" }}>
                             <ProfileCover>
-                                <ProfileCoverImage src={user?.coverPicture
-                                    ? PF + user?.coverPicture
-                                    : PF + "person/noCover.png"} />
+                                <ProfileCoverImage src={user?.coverPicture} />
                                 {user._id === currentUser._id && <ChangeProfileImages />}
-                                <ProfileUserImage src={user?.profilePicture
-                                    ? PF + user?.profilePicture
-                                    : PF + "person/noAvatar.png"} />
+                                <ProfileUserImage src={user?.profilePicture} />
                             </ProfileCover>
                             <ProfileInfo>
                                 <ProfileInfoName>{user.username}</ProfileInfoName>
