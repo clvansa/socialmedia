@@ -174,10 +174,10 @@ const PostPage = (props) => {
                                 >
                                     <PostText>{post?.desc}</PostText>
                                 </ShowMoreTextCss>
-                                <PostImage src={post.img && PF + "post/" + post.img} alt="" />
+                                <PostImage src={post.img} alt="" />
                                 {post?.video && (
                                     <ReactPlayer
-                                        url={post.video && PF + "post/" + post.video}
+                                        url={post.video}
                                         controls={true}
                                         width={"100%"}
                                         playing={true}
