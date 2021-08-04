@@ -66,12 +66,12 @@ const Share = (props) => {
       data.append("name", fileName);
       data.append("file", file);
 
+      const config = {
+        headers: { "content-type": "multipart/form-data" },
+      };
       
-
       try {
-        const res = await axiosInstance.post(`/uploads/`, data,{
-          'Content-Type': 'multipart/form-data',
-        });
+        const res = await axiosInstance.post(`/uploads/`, data, config);
         const { imageUrl } = await res.data;
         if (file.type === "video/mp4") {
           newPost.video = imageUrl;
