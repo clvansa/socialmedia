@@ -90,7 +90,6 @@ const Post = ({ post, update }) => {
     videoRef.current.pause();
   };
 
-
   return (
     <PostConatiner>
       <PostWrapper>
@@ -188,44 +187,6 @@ const Post = ({ post, update }) => {
               // pip={true}
             >
               <source src={post.video} type="video/mp4" />
-            </video>
-          )}
-
-          {post?.video && (
-            <video
-              url={post.video}
-              controls={true}
-              width={"100%"}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
-              // playing={playing}
-              volume={0.5}
-              muted={true}
-              autoPlay={playing}
-              ref={videoRef}
-              playsInline={true}
-              style={{ maxHeight: "500px", objectFit: "contain" }}
-              // pip={true}
-            >
-              <source src={post.video} type="video/x-m4v" />
-            </video>
-          )}
-          {post?.video && (
-            <video
-              url={post.video}
-              controls={true}
-              width={"100%"}
-              // onMouseOver={onMouseOver}
-              // onMouseLeave={onMouseLeave}
-              // playing={playing}
-              volume={0.5}
-              muted={true}
-              // autoPlay={playing}
-              playsInline={true}
-              style={{ maxHeight: "500px", objectFit: "contain" }}
-              // pip={true}
-            >
-              <source src={post.video} type="video/quicktime" />
             </video>
           )}
 
