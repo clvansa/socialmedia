@@ -167,7 +167,7 @@ const Post = ({ post, update }) => {
             <PostText>{post?.desc}</PostText>
           </ShowMoreTextCss>
           <PostImage src={post.img} alt="" />
-          {/* {post?.video && (
+          {post?.video && (
             <video
               url={post.video}
               controls={true}
@@ -179,16 +179,36 @@ const Post = ({ post, update }) => {
               muted={true}
               autoPlay={playing}
               ref={videoRef}
-              playsInline
+              playsInline={true}
               style={{ maxHeight: "500px", objectFit: "contain" }}
               // playsinline={true}
               // pip={true}
             >
-              <source src={post.video} />
+              <source src={post.video} type="video/mp4" />
             </video>
-          )} */}
+          )}
 
-          {post.video && (
+{post?.video && (
+            <video
+              url={post.video}
+              controls={true}
+              width={"100%"}
+              onMouseOver={onMouseOver}
+              onMouseLeave={onMouseLeave}
+              // playing={playing}
+              volume={0.5}
+              muted={true}
+              autoPlay={playing}
+              ref={videoRef}
+              playsInline={true}
+              style={{ maxHeight: "500px", objectFit: "contain" }}
+              // pip={true}
+            >
+              <source src={post.video} type="video/x-m4v" />
+            </video>
+          )}
+
+          {/* {post.video && (
             <ReactPlayer
               url={post.video}
               controls={true}
@@ -202,7 +222,7 @@ const Post = ({ post, update }) => {
               playsinline={true}
               pip={true}
             />
-          )}
+          )} */}
           {post.video}
         </PostCenter>
         <PostBottom>
