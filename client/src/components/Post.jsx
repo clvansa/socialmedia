@@ -193,7 +193,7 @@ const Post = ({ post, update }) => {
               url={post.video}
               controls={true}
               width={"100%"}
-              onMouseOver={() => console.log(post.video)}
+              onMouseOver={() => setPlaying(true)}
               onMouseLeave={() => setPlaying(false)}
               playing={playing}
               volume={0.5}
@@ -203,6 +203,7 @@ const Post = ({ post, update }) => {
               pip={true}
             />
           )}
+          {post.video}
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
