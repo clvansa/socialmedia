@@ -24,6 +24,7 @@ const Post = ({ post, update }) => {
   const [playing, setPlaying] = useState(false);
   const [bookmark, setBookmark] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [url, setUrl] = useState(null);
   const videoRef = useRef();
 
   useEffect(() => {
@@ -89,6 +90,23 @@ const Post = ({ post, update }) => {
   const onMouseLeave = () => {
     videoRef.current.pause();
   };
+
+  const createFile = async () => {
+    let response = await fetch(post.video, {});
+
+    let data = await response.blob();
+    console.log(data);
+    let metadata = {
+      type: data.type,
+    };
+    let file = new File([data], "test", metadata);
+    await setUrl(file);
+    console.log(file);
+  };
+
+  useEffect(() => {
+    createFile();
+  }, [post.video]);
 
   return (
     <PostConatiner>
@@ -171,7 +189,7 @@ const Post = ({ post, update }) => {
           <PostImage src={post.img} alt="" />
           {post?.video && (
             <video
-              url={post.video}
+              // url={post.video}
               controls={true}
               width={"100%"}
               onMouseOver={onMouseOver}
@@ -190,9 +208,9 @@ const Post = ({ post, update }) => {
             </video>
           )}
 
-          {/* {post.video && (
+          {post.video && (
             <ReactPlayer
-              url={post.video}
+              url={url && URL.createObjectURL(url)}
               controls={true}
               width={"100%"}
               onMouseOver={() => setPlaying(true)}
@@ -204,7 +222,7 @@ const Post = ({ post, update }) => {
               playsinline={true}
               pip={true}
             />
-          )} */}
+          )}
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
