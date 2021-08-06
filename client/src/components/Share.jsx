@@ -32,6 +32,7 @@ const Share = (props) => {
   const [tagResults, setTagResults] = useState([]);
   const [openFeeling, setOpenFeeling] = useState(false);
   const [feeling, setFeeling] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const getLocation = async () => {
     try {
@@ -57,13 +58,12 @@ const Share = (props) => {
       feeling: feeling && feeling,
     };
 
+    if (!file && !desc.current.value) return;
     if (file) {
       const data = new FormData();
       const extension = file.name.split(".")[file.name.split(".").length - 1];
       const name = uuid().toString().replace(/-/g, "");
-      // const fileBlob = new Blob([file], { type: file.type }); // WORKS much better (if you know what MIME type you want.
 
-      // console.log(fileBlob);
       const fileName = `${name}.${extension}`;
 
       data.append("name", fileName);
@@ -75,13 +75,20 @@ const Share = (props) => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       };
-
       try {
-        const res = await axiosInstance.post(`/uploads/`, data, config);
-        const { imageUrl } = await res.data;
-        if (file.type === "video/mp4" || file.type === "video/quicktime") {
-          newPost.video = imageUrl;
-        } else {
+        setLoading(true);
+        if (file.type.startsWith("video")) {
+          const videos = await axiosInstance.post(
+            `/upload/video`,
+            data,
+            config
+          );
+          const { videoUrl } = await videos.data;
+
+          newPost.video = videoUrl;
+        } else if (file.type.startsWith("image")) {
+          const res = await axiosInstance.post(`/uploads/`, data, config);
+          const { imageUrl } = await res.data;
           newPost.img = imageUrl;
         }
       } catch (err) {
@@ -95,9 +102,10 @@ const Share = (props) => {
       console.log(err);
     }
 
-    // props.update();
+    props.update();
     desc.current.value = "";
     setFile(null);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -212,7 +220,7 @@ const Share = (props) => {
         <ShareHr />
         {file && (
           <div>
-            {file.type !== "video/mp4" ? (
+            {!file.type.startsWith("video") ? (
               <ShareImageContainer>
                 <ShareImg src={URL.createObjectURL(file)} alt="" />
                 <CancelIcon onClick={() => setFile(null)} />
@@ -288,7 +296,13 @@ const Share = (props) => {
               </ShareOption>
             </Tooltip>
           </ShareOptions>
-          <ShareButton type="submit">Share</ShareButton>
+          <ShareButton
+            type="submit"
+            disabled={loading}
+            style={{ cursor: loading ? "not-allowed" : "pointer" }}
+          >
+            {loading ? "Loading " : "Share"}
+          </ShareButton>
         </ShareBottom>
       </ShareWrapper>
       {openFeeling && (

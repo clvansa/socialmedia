@@ -5,7 +5,7 @@ const multer = require('multer');
 //Multer  Post Storge
 const postStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/images/post")
+        cb(null, "public/videos")
     },
     filename: (req, file, cb) => {
         cb(null, req.body.name)
@@ -14,9 +14,12 @@ const postStorage = multer.diskStorage({
 
 
 const uploadPost = multer({ storage: postStorage });
-router.post('/post', uploadPost.single('file'), async (req, res) => {
+router.post('/video', uploadPost.single('file'), async (req, res) => {
     try {
-        return res.status(200).json('File uploaded successfully')
+        const { filename } = req.file;
+        const videoUrl = `https://clvansa.de/videos/${filename}`;
+
+        return res.status(200).json({ videoUrl })
     } catch (err) {
         console.log(err)
     }

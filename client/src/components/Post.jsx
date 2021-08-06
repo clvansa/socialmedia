@@ -91,22 +91,24 @@ const Post = ({ post, update }) => {
     videoRef.current.pause();
   };
 
-  const createFile = async () => {
-    let response = await fetch(post.video, {});
+  // const createFile = async () => {
+  //   let response = await fetch(post.video, {
+  //     cors: "cors",
+  //   });
 
-    let data = await response.blob();
-    console.log(data);
-    let metadata = {
-      type: data.type,
-    };
-    let file = new File([data], "test", metadata);
-    await setUrl(file);
-    console.log(file);
-  };
+  //   let data = await response.blob();
+  //   console.log(data);
+  //   let metadata = {
+  //     type: data.type,
+  //   };
+  //   let file = new File([data], "test", metadata);
+  //   await setUrl(file);
+  //   console.log(file);
+  // };
 
-  useEffect(() => {
-    createFile();
-  }, [post.video]);
+  // useEffect(() => {
+  //   createFile();
+  // }, [post.video]);
 
   return (
     <PostConatiner>
@@ -187,7 +189,7 @@ const Post = ({ post, update }) => {
             <PostText>{post?.desc}</PostText>
           </ShowMoreTextCss>
           <PostImage src={post.img} alt="" />
-          {post?.video && (
+          {/* {post?.video && (
             <video
               // url={post.video}
               controls={true}
@@ -206,11 +208,11 @@ const Post = ({ post, update }) => {
             >
               <source src={post.video} type="video/mp4" />
             </video>
-          )}
+          )} */}
 
           {post.video && (
             <ReactPlayer
-              url={url && URL.createObjectURL(url)}
+              url={post.video}
               controls={true}
               width={"100%"}
               onMouseOver={() => setPlaying(true)}
