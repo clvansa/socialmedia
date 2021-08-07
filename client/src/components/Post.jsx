@@ -24,8 +24,6 @@ const Post = ({ post, update }) => {
   const [playing, setPlaying] = useState(false);
   const [bookmark, setBookmark] = useState(false);
   const [showComments, setShowComments] = useState(false);
-  const [url, setUrl] = useState(null);
-  const videoRef = useRef();
 
   useEffect(() => {
     let mounted = true;
@@ -82,33 +80,6 @@ const Post = ({ post, update }) => {
       console.log(err);
     }
   };
-
-  const onMouseOver = () => {
-    videoRef.current.play();
-  };
-
-  const onMouseLeave = () => {
-    videoRef.current.pause();
-  };
-
-  // const createFile = async () => {
-  //   let response = await fetch(post.video, {
-  //     cors: "cors",
-  //   });
-
-  //   let data = await response.blob();
-  //   console.log(data);
-  //   let metadata = {
-  //     type: data.type,
-  //   };
-  //   let file = new File([data], "test", metadata);
-  //   await setUrl(file);
-  //   console.log(file);
-  // };
-
-  // useEffect(() => {
-  //   createFile();
-  // }, [post.video]);
 
   return (
     <PostConatiner>
@@ -189,42 +160,27 @@ const Post = ({ post, update }) => {
             <PostText>{post?.desc}</PostText>
           </ShowMoreTextCss>
           <PostImage src={post.img} alt="" />
-          {/* {post?.video && (
-            <video
-              // url={post.video}
-              controls={true}
-              width={"100%"}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
-              // playing={playing}
-              volume={0.5}
-              muted={true}
-              autoPlay={playing}
-              ref={videoRef}
-              playsInline={true}
-              style={{ maxHeight: "500px", objectFit: "contain" }}
-              // playsinline={true}
-              // pip={true}
-            >
-              <source src={post.video} type="video/mp4" />
-            </video>
-          )} */}
 
           {post.video && (
-            <ReactPlayer
-              url={post.video}
-              controls={true}
-              width={"100%"}
-              onMouseOver={() => setPlaying(true)}
-              onMouseLeave={() => setPlaying(false)}
-              playing={playing}
-              volume={0.5}
-              muted={true}
-              playsInline
-              playsinline={true}
-              pip={true}
-            />
+            <div >
+              <ReactPlayer
+                url={post.video}
+                controls={true}
+                width={"100%"}
+                height="100%"
+                onMouseOver={() => setPlaying(true)}
+                onMouseLeave={() => setPlaying(false)}
+                playing={playing}
+                volume={0.5}
+                muted={true}
+                playsInline
+                playsinline={true}
+                pip={true}
+              />
+            </div>
           )}
+
+
         </PostCenter>
         <PostBottom>
           <PostBottomLeft>
